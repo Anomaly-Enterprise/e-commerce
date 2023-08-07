@@ -62,5 +62,5 @@ foreach ($latestTestTransactions as $transaction) {
 mysqli_close($conn);
 
 // Output new transactions (optional)
-echo "New Transactions Inserted: " . implode(', ', $newTransactions);
+// echo "New Transactions Inserted: " . implode(', ', $newTransactions);
 ?>

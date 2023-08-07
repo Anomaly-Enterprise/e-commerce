@@ -13,6 +13,14 @@ if (!empty($_POST["login-btn"])) {
         // User is successfully logged in
         session_start();
 
+        // Check if the remember me checkbox is checked
+        if (!empty($_POST["remember"])) {
+            // Set a cookie to remember the user's login
+            $cookie_name = "remember_login";
+            $cookie_value = $_POST["username"]; // You can set the desired value here
+            setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30 days
+        }
+
         // Retrieve the stored redirect URL from the session
         if (isset($_COOKIE['redirect_url'])) {
             $redirectUrl = urldecode($_COOKIE['redirect_url']);
@@ -33,14 +41,19 @@ if (!empty($_POST["login-btn"])) {
         $isAdmin = $admin->isAdminExists($_POST["username"], $_POST["login-password"]);
         
         if ($isAdmin) {
-            header('Location: ./admin/admin_dashboard.php');
-            exit();
+			// Set a cookie for admin
+			$cookie_name = "admin_login";
+			$cookie_value = $_POST["username"]; // You can set the desired value here
+			setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30 days
+		
+			header('Location: ./admin/index.php'); // Redirect to admin/index.php
+			exit();
+		
         } else {
             $errorMessage = "Invalid username or password.";
         }
     }
 }
-
 ?>
 
 <HTML>
