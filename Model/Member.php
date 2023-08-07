@@ -152,8 +152,8 @@ class Member
 
             session_write_close();
             $url = "./home.php";
+            include '../include/db_connection.php';
             
-            $conn = mysqli_connect("localhost","root","","ecomm");
             $username = $memberRecord[0]['username'];
             $email = $memberRecord[0]['email'];
             $mobile = $memberRecord[0]['mobile'];

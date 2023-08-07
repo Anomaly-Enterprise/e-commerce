@@ -1,7 +1,8 @@
 <?php
     include 'include/header.php';
     include 'include/db_connection.php';
-    $conn = mysqli_connect("localhost","root","","ecomm");
+    // $conn = mysqli_connect("localhost","root","","ecomm");
+    
     $email = $_COOKIE['email'];
     $row = "";
     $query = "SELECT * FROM tbl_member WHERE email = '$email'";

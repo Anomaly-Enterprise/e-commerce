@@ -40,18 +40,6 @@ include 'razorpay_test_transactions.php';
     </tbody>
 </table>
 </div>
-<script>
-    function showSection(sectionId) {
-        var sections = document.querySelectorAll('.dashboard-section');
-        sections.forEach(function(section) {
-            section.style.display = 'none';
-        });
-        
-        var selectedSection = document.getElementById(sectionId);
-        if (selectedSection) {
-            selectedSection.style.display = 'block';
-        }
-    }
-</script>
+
 </body>
 </html>
