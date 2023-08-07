@@ -1,4 +1,4 @@
-const razorpayKey = "rzp_test_fVL3GNctoay03F"; //rzp_live_w2kXRSqpLF6spT
+const razorpayKey = "rzp_live_w2kXRSqpLF6spT"; //rzp_live_w2kXRSqpLF6spT
 
 function sendDataToServer(paymentID) {
     var xhr = new XMLHttpRequest();

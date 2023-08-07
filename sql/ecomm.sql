@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2023 at 10:17 PM
+-- Generation Time: Aug 04, 2023 at 07:03 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -22,6 +22,28 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `ecomm` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `ecomm`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admins`
+--
+
+CREATE TABLE `admins` (
+  `s_no` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`s_no`, `name`, `email`, `username`, `password`) VALUES
+(1, 'Mohd Faheem Ahmad', 'mohdfaheemahmad5@gmail.com', 'bloggerFaheem', '$2y$10$YnhXL6M0LYV40laqjF7sYexAqOmXDJEd.Ihf6yxMuqWmeXqUPRFOO'),
+(3, 'Shuja ur Rahman', 'shujaurrehman210@gmail.com', 'bloggerShuja', '$2y$10$XuD61Roea1y/N9HXQEyT5OZ0TefiXgBzdkmDXAiNNR25je0NKKSTi');
 
 -- --------------------------------------------------------
 
@@ -48,6 +70,31 @@ INSERT INTO `allblogs` (`blog_sno`, `username`, `email`, `blog_title`, `blog_sub
 (88, 'shujaurrahman', 'Shujaurrehman210@gmail.com', 'FOREVER MEANT NEVER.', 'literature', ' Sounds of leaves uttering by shoes of passengers were heard,\r\nFlashback to a ago when these leaves were the pamphlets; exchange letter of the lovers\r\nWritten with feelings like deepen heart words elaborating each others love\r\nConsidering the beauties ,the chaos, the stillness, the oneness of widen and exotic love\r\nThe life that tied the thumbs of goals to the future was embrace with the newness of present\r\nPresent with her\r\nContracting an amendment for forever was the promise to be sign on\r\nBut what?\r\nWas that “forever” worth a penny ; the promises , the chaos , the stillness, the love, the sacrifice , the aims, the oneness of two,  all deemed to low that sake of illness derived from coward people’s thinking was born\r\nAnd this ‘forever ‘flew away from the life of two to one like the bird that flew just after freed from bars\r\nForever was ever meant just for never\r\nThere was nothing still with life and the love too\r\nThe amendment was just for sake to justify the partner at present, the future mentioned by both as ‘forever’ was a lie, a big lie; falseness was embraced in partnership\r\n‘Forever ‘only meant to fly the thirst of illness of never being one at a time\r\nUnbiased with thought I started applauding my thoughts as I got deep with in\r\nStating some cases thrown out by this society\r\nA claim was adorned, there is nothing such as ‘forever’ in the dictionary of life, a journey of lies; a journey on earth\r\nAppealing to justify I asked to clarify, it stated me\r\nWe are liars of heart just satisfying the present, and imagining the future and stating according to that ,a stillness and a ‘forever’ in the life of finite days\r\nAll we are just illusionist; a liars of reality screens keeping our self in hypothetical situation just to adorn our self\r\nThe ‘forever was little bit a lower than ever’ it was never than a bit more\r\nEverything ended with a certain exotic clause thou the this ‘forever’ never but it was exception in the life of finite days\r\nThou it was never so deeply explained\r\nWhat it could be\r\nWhat it would be\r\nIf a certain clauses are added to it\r\nBut every time I added a word to ‘forever’ it always meant undefined, unpredictable\r\nThat is meaningless\r\nSo every time I was satisfying with a word I was lying\r\nThus is everyone\r\nForever always mentioned undefined\r\nWe just appealed to satisfy the hunger of love with this word\r\nAs if contract of love was amended and rewarded by mentioning ‘forever’ in the talks\r\nThat lies were lies of injustice\r\nThe lies of society and the cruel heart\r\nForever never added up to infinite it was always finite, a short distanced finite lagging stillness too\r\nNever was stillness in anything in this world\r\nAnd never ‘a forever meant ever in this era of love’\r\nNever……,There is a finite above every infinite,The world counts everything,There is nothing endless ,Everything has an end', '2021-12-18 08:02:34'),
 (89, 'Faheem_', 'Faheemahmad5@gmail.com', 'Poetry', 'TYLER KNOTT GREGSON', 'They asked me what poetry was, and as few things have, it stole my speech for a moment.All I could think to say was that poetry is taking an ache and making it sing.', '2021-12-18 08:06:26'),
 (90, 'shujaurrahman', 'Shujaurrehman210@gmail.com', 'The good and the difficult', 'Poetry', 'You always hand over the good things first; here is my laughter, here is my confidence, here is the part of me I think is cute and worth loving. Eventually you close your eyes and hold out something heavy - here is the thing you might leave me for. If you’re lucky, they pick it up easily. If you’re lucky, they’ll let you hold theirs too', '2021-12-18 08:12:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `allusers`
+--
+
+CREATE TABLE `allusers` (
+  `s_no` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `email` text NOT NULL,
+  `username` text NOT NULL,
+  `password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `allusers`
+--
+
+INSERT INTO `allusers` (`s_no`, `name`, `email`, `username`, `password`) VALUES
+(1, 'Mohd Faheem Ahmad', 'mohdfaheemahmad5@gmail.com', 'faheem', '$2y$10$1yjoinj143d17j1sNoqpoOptNol1SI7c6mmgyfJ3rhJloDec798De'),
+(4, 'Warisha Javed', 'okwarisha@gmail.com', 'warisha', '$2y$10$eGi355mYXY61e8p/TmgjuuGyfD5oDJ/pzXH9A5sk0SrG/ltHilCDe'),
+(5, 'Shuja', 'Shujaurrehman210@gmail.com', 'shujaurrahman', '$2y$10$bd0d20TRrGzqNVBeYgXER.LTRtHnWs.7I5ZbLpMAJliuusVwkfbj.'),
+(6, 'Aqsarahman', 'shujaurrahman.210@gmail.com', 'Aqsarahman210', '$2y$10$zDoZttwfVU3G7vkaeQubVeOWTc3EF0MmIYAQHcc2dmib.lUfyjxNy'),
+(7, 'Faheem', 'Faheemahmad5@gmail.com', 'Faheem_', '$2y$10$IDCf3EiESG.46tVLYh9AMuxGTTRx7OBzXvN002pWtY7vQ.qkVhiFW');
 
 -- --------------------------------------------------------
 
@@ -191,8 +238,8 @@ CREATE TABLE `tbl_member` (
 --
 
 INSERT INTO `tbl_member` (`id`, `username`, `password`, `email`, `mobile`, `address`, `create_at`) VALUES
-(2, 'Harsh', 'Ramwani8740', 'harshramwani5@gmail.com', 9978676386, 'Gandhidham', '2023-08-07 19:36:48'),
-(3, 'Darshan', 'Admin', 'darshansol108@gmail.com', 9978676386, 'Aadipur', '2023-08-07 19:37:01'),
+(2, 'Harsh', 'Ramwani8740', 'harshramwani5@gmail.com', 0, '', '2023-08-01 10:11:15'),
+(3, 'Darshan', 'Admin', 'darshansol108@gmail.com', 0, '', '2023-08-02 13:14:24'),
 (4, 'Laxman', 'Ramwani8740', 'harshramwani.21.cs@iite.indeusuni.ac.in', 9978676386, 'Sector-4, Plot no. 203', '2023-08-02 15:24:06'),
 (5, 'User', 'Ramwani8740', 'harshramwani453@gmail.com', 9978676386, 'Sector-4, Plot no. 203', '2023-08-04 04:44:47'),
 (6, 'Charmi', 'Kalyani', 'charmikalyani123@gmail.com', 1234567890, 'Ahmedavad', '2023-08-04 04:50:30');
@@ -216,12 +263,15 @@ CREATE TABLE `tbl_member_logs` (
 --
 
 INSERT INTO `tbl_member_logs` (`id`, `username`, `email`, `mobile`, `time`) VALUES
-(1, 'Charmi', 'charmikalyani123@gmail.com', 1234567890, '2023-08-07 19:17:56'),
-(2, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-07 19:22:18'),
-(3, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-07 19:26:50'),
-(4, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-07 19:36:32'),
-(5, 'ABC', 'abc@abc.com', 1234567890, '2023-08-07 19:44:18'),
-(6, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-07 19:47:21');
+(1, 'Darshan', 'darshansol108@gmail.com', 0, '2023-08-02 11:48:04'),
+(2, 'Darshan', 'darshansol108@gmail.com', 0, '2023-08-02 11:49:17'),
+(3, 'Darshan', 'darshansol108@gmail.com', 0, '2023-08-02 11:58:51'),
+(4, 'Harsh', 'harshramwani5@gmail.com', 0, '2023-08-02 13:14:59'),
+(5, 'Harsh', 'harshramwani5@gmail.com', 0, '2023-08-02 13:35:38'),
+(6, 'Laxman', 'harshramwani.21.cs@iite.indeusuni.ac.in', 9978676386, '2023-08-02 15:24:15'),
+(7, 'Harsh', 'harshramwani5@gmail.com', 0, '2023-08-03 08:17:16'),
+(8, 'Harsh', 'harshramwani5@gmail.com', 0, '2023-08-03 09:25:54'),
+(9, 'Harsh', 'harshramwani5@gmail.com', 0, '2023-08-03 09:27:40');
 
 -- --------------------------------------------------------
 
@@ -301,137 +351,33 @@ INSERT INTO `transaction_data` (`transaction_id`, `amount`, `currency`, `status`
 ('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
 ('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
 ('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MKpdKcPrIRIRnV', 5437, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLWjR1950VDbCN', 1499, 'INR', 'authorized'),
-('pay_MLDO4U7qjmQLXv', 1439, 'INR', 'captured'),
-('pay_MLDLBEhRfCpCAk', 1799, 'INR', 'authorized'),
-('pay_MLsyqnHrggiTiX', 11893, 'INR', 'authorized'),
-('pay_MLsvBB0ag2QPxM', 10194, 'INR', 'authorized'),
-('pay_MLsrt6zmwQHinq', 3398, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLsyqnHrggiTiX', 11893, 'INR', 'authorized'),
-('pay_MLsvBB0ag2QPxM', 10194, 'INR', 'authorized'),
-('pay_MLsrt6zmwQHinq', 3398, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLsyqnHrggiTiX', 11893, 'INR', 'authorized'),
-('pay_MLsvBB0ag2QPxM', 10194, 'INR', 'authorized'),
-('pay_MLsrt6zmwQHinq', 3398, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MLsyqnHrggiTiX', 11893, 'INR', 'authorized'),
-('pay_MLsvBB0ag2QPxM', 10194, 'INR', 'authorized'),
-('pay_MLsrt6zmwQHinq', 3398, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized'),
-('pay_MLWloFWyBddeEr', 1799, 'INR', 'authorized'),
-('pay_MNIipNeeJVmx1c', 1799, 'INR', 'authorized'),
-('pay_MLsyqnHrggiTiX', 11893, 'INR', 'authorized'),
-('pay_MLsvBB0ag2QPxM', 10194, 'INR', 'authorized'),
-('pay_MLsrt6zmwQHinq', 3398, 'INR', 'authorized'),
-('pay_MLsdZcvM9M521J', 3568, 'INR', 'authorized'),
-('pay_MLXujhHKT5PAmH', 1799, 'INR', 'authorized'),
-('pay_MLX7MBF2eq7yU9', 1799, 'INR', 'authorized'),
-('pay_MLWtMC62cyMUKc', 1799, 'INR', 'authorized'),
-('pay_MLWp7LbV4TTvWX', 1799, 'INR', 'authorized'),
-('pay_MLWmnJF5NH31Qv', 1799, 'INR', 'authorized');
+('pay_MKpdKcPrIRIRnV', 5437, 'INR', 'authorized');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `admins`
+--
+ALTER TABLE `admins`
+  ADD PRIMARY KEY (`s_no`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
+
+--
 -- Indexes for table `allblogs`
 --
 ALTER TABLE `allblogs`
   ADD PRIMARY KEY (`blog_sno`);
+
+--
+-- Indexes for table `allusers`
+--
+ALTER TABLE `allusers`
+  ADD PRIMARY KEY (`s_no`),
+  ADD UNIQUE KEY `email` (`email`) USING HASH,
+  ADD UNIQUE KEY `username` (`username`) USING HASH;
 
 --
 -- Indexes for table `cart_items`
@@ -480,10 +426,22 @@ ALTER TABLE `tbl_member_logs`
 --
 
 --
+-- AUTO_INCREMENT for table `admins`
+--
+ALTER TABLE `admins`
+  MODIFY `s_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `allblogs`
 --
 ALTER TABLE `allblogs`
   MODIFY `blog_sno` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `allusers`
+--
+ALTER TABLE `allusers`
+  MODIFY `s_no` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `cart_items`
@@ -519,13 +477,13 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbl_member_logs`
 --
 ALTER TABLE `tbl_member_logs`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

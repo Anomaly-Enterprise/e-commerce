@@ -1,7 +1,7 @@
 <?php
 // Replace these with your actual Razorpay Test API credentials
-$razorpayKey = 'rzp_test_fVL3GNctoay03F';
-$razorpaySecret = 'RJg1zHGSGKxiN9rwFMiwagDE';
+$razorpayKey = 'rzp_live_w2kXRSqpLF6spT';
+$razorpaySecret = 'eIsmRISMm1p99r7zS3VJyq1c';
 
 // Function to fetch latest test transactions using Razorpay API
 function fetchLatestTestTransactions($razorpayKey, $razorpaySecret) {
