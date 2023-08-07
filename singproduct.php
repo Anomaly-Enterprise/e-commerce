@@ -130,18 +130,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <button class="normal">Sign up</button>
     </div>
 </section>
-<?php
-if (isset($_COOKIE["user"]) && $_COOKIE["user"] != "") {
-    ?>
-    <div id="customPopup" class="popup">
-        <div class="popup-content">
-            <span class="close-btn" onclick="closePopup()">&times;</span>
-            <h4>Product added to the Cart</h4>
-            <button name="red-cart" onclick="redirect()">Proceed to The Cart</button>
-            <!-- You can customize the content of the popup here if needed -->
-        </div>
+<div id="customPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h4>Product added to the Cart</h4>
+        <button name="red-cart" onclick="redirect()">Proceed to The Cart</button>
+        <!-- You can customize the content of the popup here if needed -->
     </div>
-<?php } ?>
+</div>
 <script src="js/script.js"></script>
 <script src="js/single_product.js"></script>
 <?php include 'include/footer.php'; ?>

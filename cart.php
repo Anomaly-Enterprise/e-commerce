@@ -44,6 +44,7 @@
             <br><br>
                 User Name : <?php echo $row['username']; ?><br><br>
                 Email : <?php echo $row['email']; ?> <br><br>
+                Phone : <?php echo $row['mobile'];?><br><br>
                 Address : <?php echo $row['address']; ?> <br><br>
             </div>
         </div>
@@ -87,7 +88,12 @@
         <button onclick="closePopup()">Close</button>
     </div>
     
-
+    <script>
+        var razorpayUserName = "<?php echo $row['username']; ?>";
+        var razorpayUserEmail = "<?php echo $row['email']; ?>";
+        var razorpayUserAddress = "<?php echo $row['address']; ?>";
+        var razorpayUserContact = "<?php echo $row['mobile']; ?>";
+    </script>
     <script src="js/cart.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="js/razorpay.js"></script>

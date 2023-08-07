@@ -1,22 +1,24 @@
-var MainImg = document.getElementById("MainImg");
-var smallimg = document.getElementsByClassName("small-img");
-var valid;
+document.addEventListener("DOMContentLoaded", function() {
+    var MainImg = document.getElementById("MainImg");
+    var smallimg = document.getElementsByClassName("small-img");
+    var valid;
 
-smallimg[0].onclick = function () {
-    MainImg.src = smallimg[0].src;
-}
+    smallimg[0].onclick = function () {
+        MainImg.src = smallimg[0].src;
+    }
 
-smallimg[1].onclick = function () {
-    MainImg.src = smallimg[1].src;
-}
+    smallimg[1].onclick = function () {
+        MainImg.src = smallimg[1].src;
+    }
 
-smallimg[2].onclick = function () {
-    MainImg.src = smallimg[2].src;
-}
+    smallimg[2].onclick = function () {
+        MainImg.src = smallimg[2].src;
+    }
 
-smallimg[3].onclick = function () {
-    MainImg.src = smallimg[3].src;
-}
+    smallimg[3].onclick = function () {
+        MainImg.src = smallimg[3].src;
+    }
+});
 function getCookie(username) {
     let name = username + "=";
     let spli = document.cookie.split(';');
@@ -31,15 +33,15 @@ function getCookie(username) {
     }
     return "";
 }
+
 function addToCart() {
-    var myCoookie = getCookie("user");
-    if (myCoookie != "") {
+    var myCookie = getCookie("user");
+    if (myCookie != "") {
         let productName = document.getElementById('pname').textContent;
         let productPrice = document.getElementById('price').textContent;
         let productSize = document.getElementById('size').value;
         let productQuantity = document.querySelector('input[type="number"]').value;
 
-        // Construct the item object with product details
         const item = {
             productName: productName,
             productPrice: productPrice,
@@ -47,33 +49,33 @@ function addToCart() {
             productQuantity: productQuantity,
         };
 
-        // Get the existing cart items from localStorage or create an empty object
         let cartItems = JSON.parse(localStorage.getItem("cartItems")) || {};
 
-        // Use the product name as the key for the cart item
         const key = productName;
 
-        // Check if the product is already in the cart
         if (cartItems[key]) {
-            // Update the quantity if the product is already in the cart
             cartItems[key].productQuantity = productQuantity;
         } else {
-            // Add the new product to the cart
             cartItems[key] = item;
         }
 
-        // Save the updated cart items to localStorage
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
 
-        // Redirect to cart.php
-        // window.location.href = "cart.php";
-        // alert("Product added to the Cart");
+        // Check if the user is logged in
+        // Simulate a successful login (replace with your actual login logic)
+        // For demonstration purposes, setTimeout is used here
+        setTimeout(function() {
+            // If login is successful, redirect to cart.php
+            window.location.href = "cart.php";
+        }, 2000); // Delay for 2 seconds (adjust as needed)
+
         showPopup();
     } else {
+        // If user is not logged in, redirect to login.php
+        document.cookie = "redirect_url=" + encodeURIComponent(window.location.href);
         window.location.href = "login.php";
     }
 }
-
 
 function redirect() {
     window.location.href = "cart.php";

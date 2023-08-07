@@ -19,28 +19,28 @@ if (! empty($_POST["signup-btn"])) {
 	<div class="phppot-container">
 		<div class="sign-up-container">
 			<div class="login-signup">
-				<a href="index.php">Login</a>
+				<a href="login.php">Login</a>
 			</div>
 			<div class="">
 				<form name="sign-up" action="" method="post" onsubmit="return signupValidation()">
 					<div class="signup-heading">Registration</div>
 					<?php
-    if (! empty($registrationResponse["status"])) {
-        ?>
+    					if (! empty($registrationResponse["status"])) {
+					?>
 					<?php
-        if ($registrationResponse["status"] == "error") {
-            ?>
+        					if ($registrationResponse["status"] == "error") {
+					?>
 					<div class="server-response error-msg"><?php echo $registrationResponse["message"]; ?></div>
 					<?php
-        } else if ($registrationResponse["status"] == "success") {
-            ?>
-					<div class="server-response success-msg"><?php echo $registrationResponse["message"]; ?></div>
+        					} else if ($registrationResponse["status"] == "success") {
+            		?>
+					<div class="server-response success-msg"><?php echo $registrationResponse["message"]; header('Location: login.php'); ?></div>
 					<?php
-        }
-        ?>
+        					}
+       				?>
 					<?php
-    }
-    ?>
+    					}
+    				?>
 					<div class="error-msg" id="error-msg"></div>
 					<div class="row">
 						<div class="inline-block">

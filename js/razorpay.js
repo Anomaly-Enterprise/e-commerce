@@ -48,9 +48,10 @@ function initiateRazorpayPayment() {
             // Extract the required transaction data and log it
             const transactionData = {
                 payment_id: paymentID,
-                name: "<?php echo $row['username']; ?>",
-                email: "<?php echo $row['email']; ?>",
-                contact: "+91 0000000000",
+                name: razorpayUserName,
+                email: razorpayUserEmail,
+                contact: razorpayUserContact,
+                address: razorpayUserAddress,
                 // Include any other relevant data you want to log
             };
             
@@ -59,9 +60,10 @@ function initiateRazorpayPayment() {
             // redirect_transaction();
         },
         prefill: {
-            name: "<?php echo $row['username']; ?>",
-            email: "<?php echo $row['email']; ?>",
-            contact: "+91 0000000000",
+            name: razorpayUserName,
+            email: razorpayUserEmail,
+            contact: razorpayUserContact,
+            address: razorpayUserAddress,
         },
         theme: {
             color: "#007bff",

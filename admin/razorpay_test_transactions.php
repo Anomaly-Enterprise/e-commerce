@@ -1,6 +1,4 @@
 <?php
-// razorpay_test_transactions.php
-
 // Replace these with your actual Razorpay Test API credentials
 $razorpayKey = 'rzp_test_fVL3GNctoay03F';
 $razorpaySecret = 'RJg1zHGSGKxiN9rwFMiwagDE';
@@ -27,7 +25,42 @@ function fetchLatestTestTransactions($razorpayKey, $razorpaySecret) {
         return [];
     }
 }
+include '../include/db_connection.php';
+// Fetch existing transactions from the database
+$sql = "SELECT * FROM transaction_data";
+$result = mysqli_query($conn, $sql);
+$existingTransactions = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $existingTransactions[] = $row['transaction_id'];
+    }
+}
 
-// Fetch latest test transactions
+// Fetch latest test transactions from API
 $latestTestTransactions = fetchLatestTestTransactions($razorpayKey, $razorpaySecret);
+
+// Compare and insert new transactions
+$newTransactions = [];
+foreach ($latestTestTransactions as $transaction) {
+    if (!in_array($transaction['id'], $existingTransactions)) {
+        // Insert the new transaction into the database
+        $transactionId = $transaction['id'];
+        $amount = $transaction['amount'];
+        $currency = $transaction['currency'];
+        // Add more fields as needed
+
+        $insertSql = "INSERT INTO transaction_data (transaction_id, amount, currency) 
+                      VALUES ('$transactionId', '$amount', '$currency')";
+        $insertResult = mysqli_query($conn, $insertSql);
+        if ($insertResult) {
+            $newTransactions[] = $transactionId;
+        }
+    }
+}
+
+// Close the database connection
+mysqli_close($conn);
+
+// Output new transactions (optional)
+echo "New Transactions Inserted: " . implode(', ', $newTransactions);
 ?>

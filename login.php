@@ -2,31 +2,47 @@
 use Phppot\Member;
 use Phppot\Admin;
 
-if (! empty($_POST["login-btn"])) {
+if (!empty($_POST["login-btn"])) {
     require_once __DIR__ . '/Model/Member.php';
-	require_once __DIR__ . '/Model/Admin.php';
+    require_once __DIR__ . '/Model/Admin.php';
 
     $member = new Member();
     $loginResult = $member->loginMember();
 
-	if ($loginResult !== "success") {
-        // The member login failed, so check if it's an admin login
+    if ($loginResult === "success") {
+        // User is successfully logged in
+        session_start();
+
+        // Retrieve the stored redirect URL from the session
+        if (isset($_COOKIE['redirect_url'])) {
+            $redirectUrl = urldecode($_COOKIE['redirect_url']);
+            // Delete the cookie (optional)
+            setcookie('redirect_url', '', time() - 3600, '/');
+
+            // Redirect the user back to the stored URL
+            header('Location: ' . $redirectUrl);
+            exit();
+        }
+
+        // If there's no stored URL, redirect to a default page (home.php)
+        header('Location: home.php');
+        exit();
+    } else {
+        // User login failed
         $admin = new Admin();
         $isAdmin = $admin->isAdminExists($_POST["username"], $_POST["login-password"]);
+        
         if ($isAdmin) {
-            // The admin login is successful. Perform the necessary actions.
-            // For example, you can redirect to the admin dashboard.
-            header("Location: ./admin/admin_dashboard.php");
+            header('Location: ./admin/admin_dashboard.php');
             exit();
         } else {
-            // The login failed for both member and admin credentials.
-            // Handle the error message or redirect to the login page.
             $errorMessage = "Invalid username or password.";
-            // ...
         }
     }
 }
+
 ?>
+
 <HTML>
 
 <HEAD>
