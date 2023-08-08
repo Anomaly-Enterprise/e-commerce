@@ -22,6 +22,7 @@
                     <td>Remove</td>
                     <td>Product</td>
                     <td>Price</td>
+                    <td>Size</td>
                     <td>Quantity</td>
                     <td>SubTotal</td>
                 </tr>
@@ -38,15 +39,16 @@
                 <button class="normal" onclick="applyCoupon()">Apply</button>
             </div>
             <div>
-            <?php
-                $uname = "Hi";
-                $email = "";
-            ?>
             <br><br>
                 User Name : <?php echo $row['username']; ?><br><br>
                 Email : <?php echo $row['email']; ?> <br><br>
                 Phone : <?php echo $row['mobile'];?><br><br>
-                Address : <?php echo $row['address']; ?> <br><br>
+                Address : <input type="text" name="address" id="address" value="<?php echo $row['address']; ?>">  <br><br>
+                <button class="normal" onclick="changeAddress()">
+                    Change Address
+                </button>
+                <!-- <button>Change Address</button>  -->
+                <br>
             </div>
         </div>
         <?php
@@ -98,5 +100,28 @@
     <script src="js/cart.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="js/razorpay.js"></script>
-    
+
+    <script>
+        function changeAddress(){
+            var address = document.getElementById("address").value;
+            var email = "<?php echo $row['email']; ?>";
+            var username = "<?php echo $row['username']; ?>";
+            var mobile = "<?php echo $row['mobile']; ?>";
+            var data = {
+                address: address,
+                email: email,
+                username: username,
+                mobile: mobile
+            }
+            $.ajax({
+                url: "data/change_address.php",
+                method: "POST",
+                data: data,
+                success: function(response){
+                    alert(response);
+                }
+            })
+            // window.location.reload();
+        }
+    </script>
     <?php include 'include/footer.php'; ?>

@@ -152,7 +152,7 @@ class Member
 
             session_write_close();
             $url = "./home.php";
-            include '../include/db_connection.php';
+            include './include/db_connection.php';
             
             $username = $memberRecord[0]['username'];
             $email = $memberRecord[0]['email'];

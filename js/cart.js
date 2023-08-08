@@ -14,6 +14,7 @@ function updateCartTotals() {
                     <td><button class="cart-remove-btn" onclick="removeFromCart('${key}')">Remove</button></td>
                     <td>${item.productName}</td>
                     <td>₹ ${item.productPrice}</td>
+                    <td>${item.productSize}</td>
                     <td><input type="number" value="${item.productQuantity}" class="cart-quantity-input" onchange="updateCartItemQuantity('${key}', this.value)"></td>
                     <td>₹ ${productSubTotal.toFixed(2)}</td>
                 </tr>
