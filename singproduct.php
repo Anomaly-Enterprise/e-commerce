@@ -5,12 +5,15 @@ require_once 'include/db_connection.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $productName = isset($_POST["name"]) ? $_POST["name"] : "";
     $productPrice = isset($_POST["price"]) ? $_POST["price"] : "";
+    $productDescription = isset($_POST["description"])? $_POST["description"] : "";
 
-    $sql = "SELECT image FROM product_data WHERE name = ? AND price = ?";
+    $sql = "SELECT image, description FROM product_data WHERE name = ? AND price = ?";
+
     $stmt = $conn->prepare($sql);
+
     $stmt->bind_param("ss", $productName, $productPrice);
     $stmt->execute();
-    $stmt->bind_result($imageData);
+    $stmt->bind_result($imageData, $productDescription);
 
     // Fetch the result
     $stmt->fetch();
@@ -89,9 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <?php
             echo "<h2 id='pname'>$productName</h2>";
             echo "Price: ₹<p id='price'>$productPrice</p>";
-} else {
-    echo "<p>No product details found.</p>";
-}
+
 
 ?>
         <select id="size">
@@ -105,9 +106,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <button class="normal add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
         <h4>Product Details</h4>
-        <span>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur porro quidem consequuntur fuga!
-            Reprehenderit at voluptatum enim non harum labore possimus doloremque accusamus nobis culpa totam earum
-            dolore quo, pariatur cupiditate alias quaerat! Neque?</span>
+        <span><?php echo $productDescription; ?></span>
+
+
+<?php
+    } else {
+    echo "<p>No product details found.</p>";
+}
+?>     
+
     </div>
 </section>
 
@@ -138,6 +145,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <!-- You can customize the content of the popup here if needed -->
     </div>
 </div>
+
+
 <script src="js/script.js"></script>
 <script src="js/single_product.js"></script>
 <?php include 'include/footer.php'; ?>

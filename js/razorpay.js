@@ -1,24 +1,4 @@
-const razorpayKey = "rzp_live_w2kXRSqpLF6spT"; //rzp_live_w2kXRSqpLF6spT
-
-function sendDataToServer(paymentID) {
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "process_data.php", true);
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                // The response from PHP will be available in xhr.responseText
-                console.log("Data successfully sent to PHP.");
-                console.log("Response from PHP:", xhr.responseText);
-                // Redirect to process_data.php after a successful response
-                // window.location.replace("process_data.php?paymentID=" + encodeURIComponent(paymentID));
-            } else {
-                console.error("Error sending data to PHP.");
-            }
-        }
-    };
-    xhr.send("paymentID=" + encodeURIComponent(paymentID));
-}
+const razorpayKey = "rzp_test_fVL3GNctoay03F"; //rzp_live_w2kXRSqpLF6spT
 
 function initiateRazorpayPayment() {
     const cartSubTotal = parseFloat(localStorage.getItem("cartSubTotal")) || 0;
@@ -31,12 +11,23 @@ function initiateRazorpayPayment() {
         const couponDiscount = calculateCouponDiscount(cartSubTotal, couponCode);
         totalAmount -= couponDiscount;
     }
+    
+    // Create a cartDetails object with subtotal and total
+    const cartDetails = {
+        subtotal: cartSubTotal,
+        total: totalAmount
+    };
+
     var totalAmountInRupees = parseFloat(document.getElementById('total').innerText.replace('₹', ''));
     var totalAmountInPaise = totalAmountInRupees * 100; // Convert to paise
+    var testTotal = document.getElementById('total').innerHTML.replace('₹','');
+    var coupon = document.getElementById('applied-coupon').innerHTML;
+    // Retrieve cart data from localStorage
+    const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
 
     const options = {
         key: razorpayKey,
-        amount: totalAmountInPaise, // Pass the updated total amount in paise
+        amount: totalAmountInPaise,
         currency: "INR",
         name: "Cara",
         description: "Payment for your order",
@@ -45,19 +36,8 @@ function initiateRazorpayPayment() {
             const paymentID = response.razorpay_payment_id;
             clearCartDetails();
 
-            // Extract the required transaction data and log it
-            const transactionData = {
-                payment_id: paymentID,
-                name: razorpayUserName,
-                email: razorpayUserEmail,
-                contact: razorpayUserContact,
-                address: razorpayUserAddress,
-                // Include any other relevant data you want to log
-            };
-            
-            
-            showPopup(paymentID);
-            // redirect_transaction();
+            // Pass cartData and cartDetails to the showPopup function
+            showPopup(paymentID, cartData, cartDetails, testTotal, coupon);
         },
         prefill: {
             name: razorpayUserName,
@@ -75,20 +55,38 @@ function initiateRazorpayPayment() {
     razorpayInstance.open();
 }
 
-function showPopup(paymentID) {
+function showPopup(paymentID, cartDataParam, cartDetails, testTotal, coupon) {
     const popup = document.getElementById("paymentSuccessPopup");
     const paymentIDElement = document.getElementById("paymentID");
+    const trans_id = document.getElementById("trans_detail");
+    const trans_status = document.getElementById("tran_status");
+
     paymentIDElement.textContent = paymentID;
-    // var dataToSend = "Hello, PHP!";
-    sendDataToServer(paymentID);
+    trans_id.textContent = paymentID;
 
+    trans_status.style.display = "block";
+    trans_id.style.display = "block";
 
-    popup.style.display = "block";
+    // Convert the cartDataParam array to JSON string
+    const encodedCartData = encodeURIComponent(JSON.stringify(cartDataParam));
+
+    // Redirect the user with cart details as URL parameters
+    const redirectURL = "checkouttest.php" +
+        "?paymentID=" + encodeURIComponent(paymentID) +
+        "&subtotal=" + encodeURIComponent(cartDetails.subtotal) +
+        "&cart_data_for_php=" + encodedCartData + 
+        "&test_total=" + encodeURIComponent(testTotal) +
+        "&coupon=" + encodeURIComponent(coupon);
+
+    window.location.href = redirectURL;
 }
+
 
 function closePopup() {
     const popup = document.getElementById("paymentSuccessPopup");
+    
     popup.style.display = "none";
+
     // window.location.replace("http://localhost/charmi/transaction_log.php");
 }
 
@@ -140,10 +138,6 @@ function applyCoupon() {
     } else {
         alert("Invalid coupon code.");
     }
-}
-
-function redirect_transaction() {
-    window.location.href = "transaction_log.php";
 }
 
 function validateCoupon(couponCode) {

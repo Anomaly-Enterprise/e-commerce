@@ -59,7 +59,20 @@ function updateCartItemQuantity(productName, quantity) {
         updateCartTotals();
     }
 }
+function updateCartData(cartData) {
+    document.getElementById('cart-data').value = JSON.stringify(cartData);
+}
+
+function openCheckoutPopup() {
+    popup.style.display = 'flex';
+    // Retrieve and set the cart data
+
+
+    let cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
+    updateCartData(cartData);
+}
 
 document.addEventListener("DOMContentLoaded", function () {
     updateCartTotals();
 });
+

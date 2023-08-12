@@ -41,7 +41,7 @@
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li id="lg-bag"><a href="cart.php"><i class="far fa-shopping-bag"></i></a></li>
-                <li id="lg-user"><a href="#"><i class="far fa-user"></i></a></li>
+                <li id="lg-user"><a href="login.php"><i class="far fa-user"></i></a></li>
                 <a href="#" id="close"><i class="far fa-times"></i></a>
             </ul>
         </div>

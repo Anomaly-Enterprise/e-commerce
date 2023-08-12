@@ -84,6 +84,7 @@ if (!isset($_COOKIE['admin_login']) || $_COOKIE['admin_login'] !== 'Admin') {
                             echo '<thead>';
                             echo '<tr>';
                             echo '<th>Product Name</th>';
+                            echo '<th>Product Description</th>';
                             echo '<th>Product Image</th>';
                             echo '<th>Product Price</th>';
                             echo '<th>Actions</th>';
