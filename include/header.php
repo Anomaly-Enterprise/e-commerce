@@ -1,4 +1,4 @@
-<?php include 'include/db_connection.php'; ?>
+<?php include 'db_connection.php'; ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Commerce</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- <link rel="stylesheet" href="blogger/index.css"> -->
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <style>
@@ -41,7 +42,18 @@
                 <li><a href="about.php">About</a></li>
                 <li><a href="contact.php">Contact</a></li>
                 <li id="lg-bag"><a href="cart.php"><i class="far fa-shopping-bag"></i></a></li>
-                <li id="lg-user"><a href="login.php"><i class="far fa-user"></i></a></li>
+                <?php
+                // Check if the user is logged in
+                session_start();
+                if (isset($_SESSION["username"])) {
+                   
+                    echo '<li id="lg-user"><a href="logout.php"><i class="far fa-user"></i></a></li>';
+                } else {
+                    
+                    echo '<li id="lg-user"><a href="login.php"><i class="far fa-user"></i></a></li>';
+                }
+                ?>
+                <!-- <li id="lg-user"><a href="login.php"><i class="far fa-user"></i></a></li> -->
                 <a href="#" id="close"><i class="far fa-times"></i></a>
             </ul>
         </div>

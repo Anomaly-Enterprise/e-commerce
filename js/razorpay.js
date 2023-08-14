@@ -1,6 +1,6 @@
 const razorpayKey = "rzp_test_fVL3GNctoay03F"; //rzp_live_w2kXRSqpLF6spT
-
 function initiateRazorpayPayment() {
+
     const cartSubTotal = parseFloat(localStorage.getItem("cartSubTotal")) || 0;
     const couponCode = document.getElementById("coupon-code").value;
     const isValidCoupon = validateCoupon(couponCode);
@@ -38,6 +38,9 @@ function initiateRazorpayPayment() {
 
             // Pass cartData and cartDetails to the showPopup function
             showPopup(paymentID, cartData, cartDetails, testTotal, coupon);
+            // console.log(response);
+            // window.location.href = "shop.php ";
+
         },
         prefill: {
             name: razorpayUserName,
@@ -52,6 +55,7 @@ function initiateRazorpayPayment() {
     };
 
     const razorpayInstance = new Razorpay(options);
+    // updateAddress();
     razorpayInstance.open();
 }
 
@@ -69,16 +73,29 @@ function showPopup(paymentID, cartDataParam, cartDetails, testTotal, coupon) {
 
     // Convert the cartDataParam array to JSON string
     const encodedCartData = encodeURIComponent(JSON.stringify(cartDataParam));
+    const ajaxData = {
+        paymentID: paymentID,
+        subtotal: cartDetails.subtotal,
+        cart_data_for_php: encodedCartData,
+        test_total: testTotal,
+        coupon: coupon
+    };
 
-    // Redirect the user with cart details as URL parameters
-    const redirectURL = "checkouttest.php" +
-        "?paymentID=" + encodeURIComponent(paymentID) +
-        "&subtotal=" + encodeURIComponent(cartDetails.subtotal) +
-        "&cart_data_for_php=" + encodedCartData + 
-        "&test_total=" + encodeURIComponent(testTotal) +
-        "&coupon=" + encodeURIComponent(coupon);
-
-    window.location.href = redirectURL;
+    // Make an AJAX request to the processing script using POST
+    $.ajax({
+        type: "POST",
+        url: "main_script.php", // Replace with the correct URL of your main processing script
+        data: ajaxData,
+        success: function(response) {
+            // Process the response if needed
+            console.log(response);
+            // You can also update the UI here to show a success message, etc.
+        },
+        error: function(xhr, status, error) {
+            console.error(error);
+            // Handle error if needed
+        }
+    });
 }
 
 

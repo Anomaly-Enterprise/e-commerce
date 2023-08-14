@@ -85,7 +85,7 @@ class Member
             );
         } else {
             
-            $query = 'INSERT INTO tbl_member (username, password, email, mobile, address) VALUES (?, ?, ?, ?, ?)';
+            $query = 'INSERT INTO tbl_member (username, password, email, mobile, address,city, state, zip) VALUES (?, ?, ?, ?, ?,?,?,?)';
             $paramType = 'sssss';
             $paramValue = array(
                 $_POST["username"],
@@ -93,6 +93,9 @@ class Member
                 $_POST["email"],
                 $_POST["mobile"],
                 $_POST["address"],
+                $_POST["city"],
+                $_POST["state"],
+                $_POST["zip"]
             );
             $memberId = $this->ds->insert($query, $paramType, $paramValue);
             if (!empty($memberId)) {
@@ -145,6 +148,9 @@ class Member
             setcookie("email", $memberRecord[0]["email"], time() + (3600 * 24 * 60 * 60));
             setcookie("mobile", $memberRecord[0]["mobile"], time() + (3600 * 24 * 60 * 60));
             setcookie("address", $memberRecord[0]["address"], time() + (3600 * 24 * 60 * 60));
+            setcookie("city", $memberRecord[0]["city"], time() + (3600 * 24 * 60 * 60));
+            setcookie("state", $memberRecord[0]["state"], time() + (3600 * 24 * 60 * 60));
+            setcookie("zip", $memberRecord[0]["zip"], time() + (3600 * 24 * 60 * 60));
             $response = array(
                 "status" => "success",
                 "message" => "You have logged in successfully."
@@ -158,7 +164,7 @@ class Member
             $email = $memberRecord[0]['email'];
             $mobile = $memberRecord[0]['mobile'];
             
-            $query = "INSERT INTO tbl_member_logs(username, email, mobile) VALUES ('$username', '$email', '$mobile')";
+            $query = "INSERT INTO tbl_member_logs(username, email,mobile) VALUES ('$username', '$email', '$mobile')";
             
             mysqli_query($conn,$query);
             mysqli_close($conn);

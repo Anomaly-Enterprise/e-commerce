@@ -14,6 +14,9 @@
             <label for="product_name">Product Name:</label>
             <input type="text" id="product_name" name="product_name" required>
 
+            <label for="product_description">Product Description:</label>
+            <textarea id="product_description" name="product_description" required></textarea>
+
             <label for="product_image">Product Image:</label>
             <input type="file" id="product_image" name="product_image" accept=".jpg, .jpeg, .png" required>
 

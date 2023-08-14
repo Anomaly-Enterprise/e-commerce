@@ -36,17 +36,20 @@
 </style>
 <?php
     include 'include/db_connection.php';
-    // $conn = mysqli_connect("localhost","root","","ecomm");
-    $email = mysqli_real_escape_string($conn, $_COOKIE['email']); // Escape user input
-    $row = [];
-    $query = "SELECT * FROM tbl_member WHERE email = ?";
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
+    if(isset($_COOKIE['email'])){
+        $email = mysqli_real_escape_string($conn, $_COOKIE['email']); // Escape user input
+        $row = [];
+        $query = "SELECT * FROM tbl_member WHERE email = ?";
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
 
-    if(mysqli_num_rows($result) > 0){
-        $row = mysqli_fetch_assoc($result);
+        if(mysqli_num_rows($result) > 0){
+            $row = mysqli_fetch_assoc($result);
+        }
+    }else{
+        header('location: login.php');
     }
 ?>
     <section id="page-header" class="about-header">

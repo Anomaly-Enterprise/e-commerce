@@ -56,46 +56,97 @@ if (mysqli_num_rows($result) > 0) {
                     </label>
                     <input type="hidden" id="cart-data-for-php" name="cart_data_for_php" value="">
                     <textarea id="cart-data-display" style="display: none;"></textarea>
-                    <span id="tran_status" style="display: none;">Your Transaction ID : <span style="display: none;" id="trans_detail"></span></span>
+                    <div id="updateAddressPopup" class="popup" style="display: none;">
+                        <div class="popup-content">
+                            <span class="close-btn" onclick="closeUpdateAddressPopup()">&times;</span>
+                                <?php include 'data/change_address.php'; ?>
+                                <div class="updateAddressReturnMessage"></div>
+                        </div>
+                    </div>
+                    <!-- <span id="tran_status" style="display: none;">Your Transaction ID : <span style="display: none;" id="trans_detail"></span></span> -->
                     <input type="button" value="Continue to checkout" onclick="initiateRazorpayPayment()" class="btn">
+                    <input type="button" value="Update Address" onclick="openUpdateAddress()" class="btn">
                 </form>
             </div>
         </div>
     </div>
-    <div id="paymentSuccessPopup" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px; border: 1px solid #ccc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-        <h1>Payment Successful!</h1>
-        <p>Payment ID: <span id="paymentID"></span></p><br>
-        <button onclick="closePopup()">Close</button>
-    </div>
-    <script>
-        var popup = document.getElementById('checkoutPopup');
-        function openCheckoutPopup() {
-            popup.style.display = 'flex';
-        }
-        function closeCkeckoutPopup() {
-            popup.style.display = 'none';
-        }
-        window.addEventListener('click', function(event) {
-            if (event.target === popup) {
-                closeCkeckoutPopup();
-            }
-        });
-    </script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
-            document.getElementById('cart-data').value = JSON.stringify(cartData);
+        const cartData = JSON.parse(localStorage.getItem("cartItems")) || {};
+        document.getElementById('cart-data-for-php').value = JSON.stringify(cartData);
 
-            // Display the cart_data in the textarea for debugging
-            document.getElementById('cart-data-display').textContent = JSON.stringify(cartData);
-            
-            // Initialize and populate $cartData for PHP use
-            const cartDataForPHP = JSON.stringify(cartData);
+        // Display the cart_data in the textarea for debugging
+        document.getElementById('cart-data-display').textContent = JSON.stringify(cartData);
+        
+        // Initialize and populate $cartData for PHP use
+        const cartDataForPHP = JSON.stringify(cartData);
 
-            // Assign the value to a hidden input field for PHP to access
-            document.getElementById('cart-data-for-php').value = cartDataForPHP;
-        });
-    </script>
+        // Assign the value to a hidden input field for PHP to access
+        document.getElementById('cart-data-for-php').value = cartDataForPHP;
+    });
+
+    var popupAddress = document.getElementById('updateAddressPopup');
+    function openUpdateAddress() {
+        updateAddress();
+        popupAddress.style.display = 'flex';
+        
+    }
+    function closeUpdateAddressPopup() {
+        popupAddress.style.display = 'none';
+    }
+    window.addEventListener('click', function(event) {
+        if (event.target === popupAddress) {
+            closeUpdateAddressPopup();
+        }
+    });
+
+    var popup = document.getElementById('checkoutPopup');
+    function openCheckoutPopup() {
+        popup.style.display = 'flex';
+    }
+    function closeCkeckoutPopup() {
+        popup.style.display = 'none';
+    }
+    window.addEventListener('click', function(event) {
+        if (event.target === popup) {
+            closeCkeckoutPopup();
+        }
+    });
+
+    function updateAddress(){
+        var username = document.getElementById("fname").value;
+        var useremail = document.getElementById("email").value;
+        var usercontact = document.getElementById("phone").value;
+        var useraddress = document.getElementById("adr").value;
+        var usercity = document.getElementById("city").value;
+        var userstate = document.getElementById("state").value;
+        var userpincode = document.getElementById("zip").value;
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "data/change_address.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Handle the response from the server, if needed
+                var response = xhr.responseText;
+                var returnUpdateAddress = document.querySelector('.updateAddressReturnMessage');
+                returnUpdateAddress.innerHTML = response;
+            }
+        };
+
+        // Prepare the data to be sent
+        var params = "username=" + encodeURIComponent(username) +
+                    "&useremail=" + encodeURIComponent(useremail) +
+                    "&usercontact=" + encodeURIComponent(usercontact) +
+                    "&useraddress=" + encodeURIComponent(useraddress) +
+                    "&usercity=" + encodeURIComponent(usercity) +
+                    "&userstate=" + encodeURIComponent(userstate) +
+                    "&userpincode=" + encodeURIComponent(userpincode);
+
+        // Send the request
+        xhr.send(params);
+    }
+</script>
 
     <script src="js/cart.js"></script>
     <script src="js/razorpay.js"></script>

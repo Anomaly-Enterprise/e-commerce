@@ -1,5 +1,6 @@
 
 <?php
+  
   require "./partials/dbBlogs.php";
 
   $fetch = false;
@@ -26,19 +27,15 @@
       require "./partials/links.php";
     ?>
     <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="./static/css/profileIndexCommonCard.css">
-    
   </head>
-
 <body>
   <?php
     require "./partials/sideBar.php";
   ?>
-
   <section class="home-section">
-    
     <?php
-    
       if(isset($_SESSION) and isset($_SESSION['username'])){
         $currentUser = $_SESSION['username'];
 
@@ -47,19 +44,11 @@
       else{
         echo "<div class='text'>Blogs</div>";
       }
-
     ?>
-
     <div id= "blogs" class="my-1 mb-6">
-
-
       <?php
           if($fetch){
-
               while($data = mysqli_fetch_object($result)){
-
-              
-                
                 $blogSno = $data->{'blog_sno'};
                 $username = $data->{'username'};
                 $email = $data->{'email'};

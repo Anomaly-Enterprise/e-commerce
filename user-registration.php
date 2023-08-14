@@ -74,7 +74,30 @@ if (! empty($_POST["signup-btn"])) {
 							<input class="input-box-330" type="textarea" name="address" id="address">
 						</div>
 					</div>
-
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								City<span class="required error" id="address-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="city" id="city">
+						</div>
+					</div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								State<span class="required error" id="address-info"></span>
+							</div>
+							<input class="input-box-330" type="text" name="state" id="state">
+						</div>
+					</div>
+					<div class="row">
+						<div class="inline-block">
+							<div class="form-label">
+								Zip<span class="required error" id="address-info"></span>
+							</div>
+							<input class="input-box-330" type="number" name="zip" id="zip">
+						</div>
+					</div>
 					<div class="row">
 						<div class="inline-block">
 							<div class="form-label">
@@ -107,6 +130,9 @@ if (! empty($_POST["signup-btn"])) {
 			$("#email").removeClass("error-field");
 			$("#mobile").removeClass("error-field");
 			$("#address").removeClass("error-field");
+			$("#city").removeClass("error-field");
+			$("#state").removeClass("error-field");
+			$("#zip").removeClass("error-field");
 			$("#password").removeClass("error-field");
 			$("#confirm-password").removeClass("error-field");
 
@@ -114,16 +140,28 @@ if (! empty($_POST["signup-btn"])) {
 			var email = $("#email").val();
 			var mobile = $("#mobile").val();
 			var address = $("#address").val();
+			var city = $("#city").val();
+			var state = $("#state").val();
+			var zip = $("#zip").val();
 			var Password = $('#signup-password').val();
 			var ConfirmPassword = $('#confirm-password').val();
+			var usernameRegex = /^[a-zA-Z0-9]+$/;
 			var emailRegex =
 				/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 			var mobileRegex = /^[0-9]{10}$/;
+			var addressRegex = /^[a-zA-Z0-9]+$/;
+			var cityRegex = /^[a-zA-Z]+$/;
+			var stateRegex = /^[a-zA-Z]+$/;
+			var zipRegex = /^[0-9]{6}$/;
 
 			$("#username-info").html("").hide();
 			$("#email-info").html("").hide();
 			$("#mobile-info").html("").hide();
 			$("#address-info").html("").hide();
+			$("#city-info").html("").hide();
+			$("#state-info").html("").hide();
+			$("#zip-info").html("").hide();
+
 
 			if (UserName.trim() == "") {
 				$("#username-info").html("required.").css("color", "#ee0000").show();
@@ -158,6 +196,26 @@ if (! empty($_POST["signup-btn"])) {
 				$("#address").addClass("error-field");
 				valid = false;
 			}
+			if (city.trim() == "") {
+				$("#city-info").html("required.").css("color", "#ee0000").show();
+				$("#city").addClass("error-field");
+				valid = false;
+			}
+			if (state.trim() == "") {
+				$("#state-info").html("required.").css("color", "#ee0000").show();
+				$("#state").addClass("error-field");
+				valid = false;
+			}
+			if (zip.trim() == "") {
+				$("#zip-info").html("required.").css("color", "#ee0000").show();
+				$("#zip").addClass("error-field");
+				valid = false;
+			}
+			if (!zipRegex.test(zip)) {
+                $("#zip-info").html("Invalid zip code.").css("color", "#ee0000").show();
+                $("#zip").addClass("error-field");
+                valid = false;
+            }
 			if (Password.trim() == "") {
 				$("#signup-password-info").html("required.").css("color", "#ee0000").show();
 				$("#signup-password").addClass("error-field");

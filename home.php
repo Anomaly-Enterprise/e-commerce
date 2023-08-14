@@ -6,7 +6,7 @@
         <h2>Super Value Deals</h2>
         <h1>On All Products</h1>
         <p>Save more money with Coupons upto 70% Off!</p>
-        <button>Shop Now</button>
+        <button onclick="redirect_to_shop()">Shop Now</button>
     </section>
 
     <section id="feature" class="section-p1">
@@ -87,8 +87,8 @@
 
     <section id="banner" class="section-m1">
         <h4>Repair Service</h4>
-        <h2>Upto <span>70% Off</span> - All T-Shirts and Accessories</h2>
-        <button class="normal">Explore More</button>
+        <h2>Upto <span>50% Off</span> - All T-Shirts and Accessories</h2>
+        <button class="normal" onclick="redirect_to_shop()">Explore More</button>
 
     </section>
 
@@ -135,7 +135,7 @@
         </div>
     </section>
 
-    <section id="sm-banner" class="section-p1">
+    <!-- <section id="sm-banner" class="section-p1">
         <div class="banner-box">
             <h4>Crazy Deals</h4>
             <h2>Buy 1 get 1 free</h2>
@@ -149,9 +149,9 @@
             <span>The best classic dress is on Sale at Cara</span>
             <button class="white">Learn More</button>
         </div>
-    </section>
+    </section> -->
 
-    <section id="banner3">
+    <!-- <section id="banner3">
         <div class="banner-box">
             <h2>SEASONAL SALE</h2>
             <h3>Winter Collection -50% OFF</h3>
@@ -167,7 +167,7 @@
             <h3>New Trendy Prints</h3>
         </div>
 
-    </section>
+    </section> -->
 
     <section id="newsletter" class="section-p1 section-m1">
         <div class="newstext">
@@ -178,6 +178,9 @@
     </section>
     
     <script>
+        function redirect_to_shop(){
+            window.location.href = "shop.php";
+        }
     (function (s, e, n, d, er) {
         s['Sender'] = er;
         s[er] = s[er] || function () {
