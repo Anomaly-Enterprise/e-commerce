@@ -1,51 +1,49 @@
 <?php
+include 'include/header.php';
 use Phppot\Member;
 use Phppot\Admin;
+
+// Check if the user is already authenticated
+if (isset($_SESSION["authenticated"]) && $_SESSION["authenticated"] === true) {
+    header('Location: home.php'); // Redirect to the home page or a different page
+    exit();
+}
 
 if (!empty($_POST["login-btn"])) {
     require_once __DIR__ . '/Model/Member.php';
     require_once __DIR__ . '/Model/Admin.php';
 
     $member = new Member();
-    $loginResult = $member->loginMember();
+    $username = $_POST["username"];
+    $password = $_POST["login-password"];
+
+    $loginResult = $member->loginMember($username, $password);
 
     if ($loginResult === "success") {
         // User is successfully logged in
         session_start();
-
+		$_SESSION["authenticated"] = true; // Set the authentication flag
         // Check if the remember me checkbox is checked
         if (!empty($_POST["remember"])) {
             // Set a cookie to remember the user's login
             $cookie_name = "remember_login";
-            $cookie_value = $_POST["username"]; // You can set the desired value here
+            $cookie_value = $username; // You can set the desired value here
             setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30 days
         }
 
-        // Retrieve the stored redirect URL from the session
-        if (isset($_COOKIE['redirect_url'])) {
-            $redirectUrl = urldecode($_COOKIE['redirect_url']);
-            // Delete the cookie (optional)
-            setcookie('redirect_url', '', time() - 3600, '/');
-
-            // Redirect the user back to the stored URL
-            header('Location: ' . $redirectUrl);
-            exit();
-        }
-
-        // If there's no stored URL, redirect to a default page (home.php)
+        // Redirect the user to home.php
         header('Location: home.php');
         exit();
     } else {
         // User login failed
         $admin = new Admin();
-        $isAdmin = $admin->isAdminExists($_POST["username"], $_POST["login-password"]);
+        $isAdmin = $admin->isAdminExists($username, $password); // Modify this function accordingly
         
         if ($isAdmin) {
 			// Set a cookie for admin
 			$cookie_name = "admin_login";
-			$cookie_value = $_POST["username"]; // You can set the desired value here
+			$cookie_value = $username; // You can set the desired value here
 			setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 30 days
-		
 			header('Location: ./admin/index.php'); // Redirect to admin/index.php
 			exit();
 		
@@ -129,6 +127,4 @@ if (!empty($_POST["login-btn"])) {
 			return valid;
 		}
 	</script>
-</BODY>
-
-</HTML>
+<?php include 'include/footer.php'; ?>

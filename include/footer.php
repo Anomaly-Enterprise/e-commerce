@@ -1,3 +1,7 @@
+<?php 
+$loggedIn = isset($_SESSION["username"]);
+
+?>
 <footer class="section-p1">
     <!-- <h4>&copy; 2023 YourCompanyName. All rights reserved.</h4> -->
         <div class="col">
@@ -30,7 +34,11 @@
         <div class="col">
             <h4>My Account</h4>
             <a href="about.php">About us</a>
-            <a href="login.php">Sign In</a>
+            <?php if ($loggedIn){ ?>
+            
+            <?php }else{?>
+            <a href="login.php">Sign in</a>
+            <?php } ?>
             <a href="cart.php">View Cart</a>
             <a href="#">My Wishlist</a>
             <a href="#">Track my Order</a>

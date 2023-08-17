@@ -86,7 +86,7 @@ class Member
         } else {
             
             $query = 'INSERT INTO tbl_member (username, password, email, mobile, address,city, state, zip) VALUES (?, ?, ?, ?, ?,?,?,?)';
-            $paramType = 'sssss';
+            $paramType = 'ssssssss';
             $paramValue = array(
                 $_POST["username"],
                 $_POST["signup-password"],
@@ -125,23 +125,19 @@ class Member
      * @return string
      */
     public function loginMember()
-    {
-        $memberRecord = $this->getMember($_POST["username"]);
-        $loginPassword = 0;
-        if (!empty($memberRecord)) {
-            if (!empty($_POST["login-password"])) {
-                $password = $_POST["login-password"];
-            }
-            $storedPassword = $memberRecord[0]["password"];
-            $loginPassword = 0;
-            if ($password === $storedPassword) {
-                $loginPassword = 1;
-            }
-        } else {
-            $loginPassword = 0;
-        }
-        if ($loginPassword == 1) {
-            // login success, so store the member's username in the session
+{
+    require 'include/db_connection.php';
+    $usernameOrEmail = $_POST["username"];
+    $password = $_POST["login-password"];
+    if (filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
+        $memberRecord = $this->getMemberByEmail($usernameOrEmail);
+    } else {
+        $memberRecord = $this->getMemberByUsername($usernameOrEmail);
+    }
+    if (!empty($memberRecord)) {
+        $storedPassword = $memberRecord[0]["password"];
+
+        if ($password === $storedPassword) {
             session_start();
             $_SESSION["username"] = $memberRecord[0]["username"];
             setcookie("user", $memberRecord[0]["username"], time() + (3600 * 24 * 60 * 60));
@@ -156,23 +152,48 @@ class Member
                 "message" => "You have logged in successfully."
             );
 
-            session_write_close();
-            $url = "./home.php";
-            include './include/db_connection.php';
-            
             $username = $memberRecord[0]['username'];
             $email = $memberRecord[0]['email'];
             $mobile = $memberRecord[0]['mobile'];
             
-            $query = "INSERT INTO tbl_member_logs(username, email,mobile) VALUES ('$username', '$email', '$mobile')";
-            
-            mysqli_query($conn,$query);
-            mysqli_close($conn);
+            // Update the count column in tbl_member
+            $updateQuery = "UPDATE tbl_member SET count = count + 1 WHERE username = '$username'";
+            mysqli_query($conn, $updateQuery);
 
+            $query = "INSERT INTO tbl_member_logs(username, email, mobile) VALUES ('$username', '$email', '$mobile')";
+            
+            mysqli_query($conn, $query);
+            mysqli_close($conn);
+            $url = "./home.php";
             header("Location: $url");
-        } else if ($loginPassword == 0) {
-            $loginStatus = "Invalid username or password.";
-            return $loginStatus;
+            exit();
         }
+    }
+    $loginStatus = "Invalid username or password.";
+    return $loginStatus;
+}
+                
+    public function getMemberByEmail($email)
+    {
+        $query = 'SELECT * FROM tbl_member WHERE email = ?';
+        $paramType = 's';
+        $paramValue = array($email);
+        $memberRecord = $this->ds->select($query, $paramType, $paramValue);
+        return $memberRecord;
+    }
+
+    /**
+     * Get member information by username
+     *
+     * @param string $username
+     * @return array
+     */
+    public function getMemberByUsername($username)
+    {
+        $query = 'SELECT * FROM tbl_member WHERE username = ?';
+        $paramType = 's';
+        $paramValue = array($username);
+        $memberRecord = $this->ds->select($query, $paramType, $paramValue);
+        return $memberRecord;
     }
 }

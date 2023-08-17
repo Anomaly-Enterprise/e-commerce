@@ -4,6 +4,9 @@ if (! empty($_POST["signup-btn"])) {
     require_once './Model/Member.php';
     $member = new Member();
     $registrationResponse = $member->registerMember();
+	if ($registrationResponse) {
+        header('Location:./login.php');
+    }
 }
 ?>
 <HTML>

@@ -49,21 +49,6 @@
         ?>
         </div>
     </section>
-
-
-
-    <section id="newsletter" class="section-p1 section-m1">
-        <div class="newstext">
-            <h4>Sign Up for NewsLetter</h4>
-            <p>Get E-mail updates about our latest shops and <span>special offers.</span></p>
-        </div>
-
-        <div class="form">
-            <input type="text" placeholder="your email address">
-            <button class="normal">Sign up</button>
-        </div>
-    </section>
-
     <script>
         function redirectToSingleProduct(element) {
             var productName = element.dataset.name;

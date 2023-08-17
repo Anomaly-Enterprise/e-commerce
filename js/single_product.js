@@ -76,6 +76,12 @@ function addToCart() {
         window.location.href = "login.php";
     }
 }
+function updateProductDetails(name, price, description, imageData) {
+    document.getElementById('MainImg').src = 'data:image/jpeg;base64,' + imageData;
+    document.getElementById('ProductName').textContent = name;
+    document.getElementById('ProductPrice').textContent = price;
+    document.getElementById('ProductDescription').textContent = description;
+}
 
 function redirect() {
     window.location.href = "cart.php";

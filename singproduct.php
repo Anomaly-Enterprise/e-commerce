@@ -21,41 +21,61 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Close the statement
     $stmt->close();
     ?>
-    <style>
-        .popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 9999;
-        }
+<style>
+button.normal{
 
-        .popup-content {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-            text-align: center;
-        }
+    background-color: #088178;
+    color: #000;
+    /* padding: 12px 20px; */
+    font-size: 14px;
+    font-weight: 600;
+    padding: 15px 30px;
+    /* color: #000; */
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s;
+}
+button:hover{
+    background-color: #ffbd27;
+    color:#000;
+}
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9999;
+}
 
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
 
-        .close-btn:hover {
-            color: red;
-        }
-    </style>
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: red;
+}
+</style>
     <section id="prodedetails" class="section-p1">
         <div class="single-pro-image">
             <!-- Display the main product image -->
@@ -126,27 +146,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
 </section>
 
-<section id="newsletter" class="section-p1 section-m1">
-    <div class="newstext">
-        <h4>Sign Up for NewsLetter</h4>
-        <p>Get E-mail updates about our latest shops and <span>special offers.</span></p>
-    </div>
-
-    <div class="form">
-        <input type="text" placeholder="your email address">
-        <button class="normal">Sign up</button>
-    </div>
-</section>
 <div id="customPopup" class="popup">
     <div class="popup-content">
         <span class="close-btn" onclick="closePopup()">&times;</span>
         <h4>Product added to the Cart</h4>
-        <button name="red-cart" onclick="redirect()">Proceed to The Cart</button>
+        <button name="red-cart" class="normal" onclick="redirect()">Proceed to The Cart</button>
         <!-- You can customize the content of the popup here if needed -->
     </div>
 </div>
-
-
 <script src="js/script.js"></script>
 <script src="js/single_product.js"></script>
 <?php include 'include/footer.php'; ?>
