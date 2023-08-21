@@ -1,126 +1,152 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        #user-profile {
-            width: 80%;
-            margin: auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        #user-profile h2 {
-            margin: 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        .profile-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .profile-info img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 20px;
-        }
-        .profile-details {
-            display: flex;
-            justify-content: space-between;
-        }
-        .profile-details .user-info,
-        .profile-details .order-history {
-            flex: 1;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-        .profile-details h3 {
-            margin-top: 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            padding: 8px 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-</head>
-<body>
-    <div id="user-profile">
-        <h2>User Profile</h2>
-        <div class="profile-info">
-            <img src="user_avatar.jpg" alt="User Avatar">
-            <div class="user-name">John Doe</div>
+<?php include 'include/header.php'; ?>
+<?php include 'include/header_for_popup.php'; ?>
+
+<div id="user-profile">
+    <!-- <h2>User Profile</h2> -->
+    <div class="profile-details">
+        <div class="user-info">
+            <?php if ($loggedIn) { 
+                $username = $_SESSION["username"];
+                $email = $_SESSION["username"];
+                $query = "SELECT * FROM tbl_member WHERE username = ? or email = ?";
+                $statement = mysqli_prepare($conn, $query);
+                mysqli_stmt_bind_param($statement, "ss", $username, $email);
+                mysqli_stmt_execute($statement);
+                $result = mysqli_stmt_get_result($statement);
+                $row = mysqli_fetch_assoc($result);
+                ?>
+            <h3>Personal Information</h3>
+            <p><strong>Username:</strong> <?php echo $row['username'];?></p>
+            <p><strong>Email:</strong> <?php echo $row['email'];?></p>
+            <p><strong>Mobile:</strong> <?php echo $row['mobile'];?></p>
+            <p><strong>Address:</strong> <?php echo $row['address'];?></p>
+            <p><strong>City:</strong> <?php echo $row['city'];?></p>
+            <p><strong>State:</strong> <?php echo $row['state'];?></p>
+            <p><strong>Zip:</strong> <?php echo $row['zip'];?></p>
+            <?php } ?>
+            <button class="edit-profile-button" onclick="showPopup()">Edit Profile</button>
         </div>
-        <div class="profile-details">
-            <div class="user-info">
-                <h3>Account Information</h3>
-                <p><strong>Email:</strong> user@example.com</p>
-                <p><strong>Location:</strong> 123 Main St, City</p>
-                <button>Edit Profile</button>
-            </div>
-            <div class="order-history">
-                <h3>Order History</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Product</th>
-                            <th>Price</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>123456</td>
-                            <td>Product 1</td>
-                            <td>$49.99</td>
-                            <td>Delivered</td>
-                        </tr>
-                        <tr>
-                            <td>789012</td>
-                            <td>Product 2</td>
-                            <td>$29.99</td>
-                            <td>Processing</td>
-                        </tr>
-                        <!-- More order rows... -->
-                    </tbody>
-                </table>
-                <button>View All Orders</button>
-            </div>
+        <div class="order-history">
+            <h3>Order History</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Product Price (INR)</th>
+                        <th>Sub Total</th>
+                        <th>Discount Coupon</th>
+                        <th>Total Price(INR)</th>
+                        <th>Payment ID</th>
+                        <!-- <th>Total Amount Paid</th> -->
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    if ($loggedIn) {
+                        $orderQuery = "SELECT * FROM checkout_total_data WHERE user_name = ?";
+                        $orderStatement = mysqli_prepare($conn, $orderQuery);
+                        mysqli_stmt_bind_param($orderStatement, "s", $_SESSION["username"]);
+                        mysqli_stmt_execute($orderStatement);
+                        $orderResult = mysqli_stmt_get_result($orderStatement);
+
+                        while ($orderRow = mysqli_fetch_assoc($orderResult)) {
+                            echo "<tr>";
+                            echo "<td>" . $orderRow['order_id'] . "</td>";
+                            echo "<td>" . $orderRow['product_name'] . "</td>";
+                            echo "<td>" . $orderRow['product_quantity'] . "</td>";
+                            echo "<td>" . $orderRow['product_price'] . "</td>";
+                            echo "<td>" . $orderRow['subtotal_amount'] . "</td>";
+                            echo "<td>" . $orderRow['coupon_code'] . "</td>";
+                            echo "<td>" . $orderRow['total_amount'] . "</td>";
+                            echo "<td>" . $orderRow['payment_id'] . "</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </tbody>
+            </table>
+            <!-- <button>View All Orders</button> -->
         </div>
     </div>
-</body>
-</html>
+</div>
+<div id="edit-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <!-- <span class="close-btn" onclick="closePopup()">&times;</span> -->
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <?php include 'update_profile_ui.php'; ?>
+    </div>
+</div>
+<div id="success-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closeSuccessPopup()">&times;</span>
+        <p>Profile Updated Successfully</p>
+    </div>
+</div>
+<div id="error-popup" class="popup" style="display: none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closeErrorPopup()">&times;</span>
+        <p>Database Error Occurred</p>
+    </div>
+</div>
+
+<script>
+    function showErrorPopup() {
+        var errorPopup = document.getElementById('error-popup');
+        errorPopup.style.display = 'block';
+    }
+
+    // Function to close the error popup
+    function closeErrorPopup() {
+        var errorPopup = document.getElementById('error-popup');
+        errorPopup.style.display = 'none';
+    }
+
+    // Check if the error query parameter is present and show the popup
+    var urlParams = new URLSearchParams(window.location.search);
+    var errorParam = urlParams.get('error');
+    if (errorParam === 'database_error') {
+        showErrorPopup();
+    }
+    
+    function showSuccessPopup() {
+        var successPopup = document.getElementById('success-popup');
+        successPopup.style.display = 'block';
+    }
+
+    // Function to close the success popup
+    function closeSuccessPopup() {
+        var successPopup = document.getElementById('success-popup');
+        successPopup.style.display = 'none';
+    }
+
+    // Check if the success query parameter is present and show the popup
+    var urlParams = new URLSearchParams(window.location.search);
+    var successParam = urlParams.get('success');
+    if (successParam === 'profile_updated') {
+        showSuccessPopup();
+    }
+    // Function to show the edit profile popup
+    function showPopup() {
+        var popup = document.getElementById('edit-popup');
+        popup.style.display = 'block';
+    }
+
+    // Function to close the edit profile popup
+    function closePopup() {
+        var popup = document.getElementById('edit-popup');
+        popup.style.display = 'none';
+    }
+
+    // Close the popup if the user clicks outside the popup
+    window.addEventListener('click', function (event) {
+        var popup = document.getElementById('edit-popup');
+        if (event.target === popup) {
+            closePopup();
+        }
+    });
+</script>
+
+<?php include 'include/footer.php'; ?>
