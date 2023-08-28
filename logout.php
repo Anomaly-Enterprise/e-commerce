@@ -18,7 +18,7 @@ setcookie("user", "", time() - 3600, "/");
 setcookie("email", "", time() - 3600, "/");
 
 // Redirect to the index page
-$url = "./index.php";
+$url = "./home.php";
 header("Location: $url");
 exit();
 ?>

@@ -1,4 +1,4 @@
-const razorpayKey = "rzp_test_fVL3GNctoay03F"; //rzp_live_w2kXRSqpLF6spT
+const razorpayKey = "rzp_live_djCjHAESCY14an"; // rzp_live_djCjHAESCY14an
 function initiateRazorpayPayment() {
 
     const cartSubTotal = parseFloat(localStorage.getItem("cartSubTotal")) || 0;
@@ -51,7 +51,7 @@ function initiateRazorpayPayment() {
         theme: {
             color: "#007bff",
         },
-        test: true,
+        test: false,
     };
 
     const razorpayInstance = new Razorpay(options);
@@ -65,11 +65,11 @@ function showPopup(paymentID, cartDataParam, cartDetails, testTotal, coupon) {
     const trans_id = document.getElementById("trans_detail");
     const trans_status = document.getElementById("tran_status");
 
-    paymentIDElement.textContent = paymentID;
-    trans_id.textContent = paymentID;
+    // paymentIDElement.textContent = paymentID;
+    // trans_id.textContent = paymentID;
 
-    trans_status.style.display = "block";
-    trans_id.style.display = "block";
+    // trans_status.style.display = "block";
+    // trans_id.style.display = "block";
 
     // Convert the cartDataParam array to JSON string
     const encodedCartData = encodeURIComponent(JSON.stringify(cartDataParam));
@@ -82,20 +82,28 @@ function showPopup(paymentID, cartDataParam, cartDetails, testTotal, coupon) {
     };
 
     // Make an AJAX request to the processing script using POST
-    $.ajax({
+    if (typeof previousAjaxRequest !== "undefined" && previousAjaxRequest !== null) {
+        previousAjaxRequest.abort();
+    }
+
+    // Make an AJAX request to the processing script using POST
+    const currentAjaxRequest = $.ajax({
         type: "POST",
-        url: "main_script.php", // Replace with the correct URL of your main processing script
+        url: "checkouttest.php", // Replace with the correct URL of your main processing script
         data: ajaxData,
         success: function(response) {
             // Process the response if needed
             console.log(response);
-            // You can also update the UI here to show a success message, etc.
+            window.location.replace("profile.php");
         },
         error: function(xhr, status, error) {
             console.error(error);
             // Handle error if needed
         }
     });
+
+    // Store the current AJAX request to cancel it if necessary
+    previousAjaxRequest = currentAjaxRequest;
 }
 
 

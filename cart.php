@@ -36,21 +36,25 @@
 </style>
 <?php
     include 'include/db_connection.php';
-    if(isset($_COOKIE['email'])){
-        $email = mysqli_real_escape_string($conn, $_COOKIE['email']); // Escape user input
-        $row = [];
-        $query = "SELECT * FROM tbl_member WHERE email = ?";
-        $stmt = mysqli_prepare($conn, $query);
-        mysqli_stmt_bind_param($stmt, "s", $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-
-        if(mysqli_num_rows($result) > 0){
-            $row = mysqli_fetch_assoc($result);
+    $loggedIn = isset($_SESSION["username"]);
+    if($loggedIn){
+        if(isset($_COOKIE['email'])){
+            $email = mysqli_real_escape_string($conn, $_COOKIE['email']); // Escape user input
+            $row = [];
+            $query = "SELECT * FROM tbl_member WHERE email = ?";
+            $stmt = mysqli_prepare($conn, $query);
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+    
+            if(mysqli_num_rows($result) > 0){
+                $row = mysqli_fetch_assoc($result);
+            }
+        }else{
+            header('location: login.php');
         }
-    }else{
-        header('location: login.php');
     }
+    
 ?>
     <section id="page-header" class="about-header">
         <h2>LET'S TALK</h2>
@@ -108,8 +112,15 @@
                     </tr>
                 </table>
                 <input type="hidden" id="cart-data" name="cart_data_for_php" value="">
+                <?php if($loggedIn){?>
                 <button type="submit" onclick="openCheckoutPopup()" id="checkout-btn" class="normal">Proceed To CheckOut</button>
-            <!-- onclick="openCheckoutPopup()" -->
+                <?php }else{ ?>
+                    <script>
+                        alert("Please Login First");
+                        window.location.href = "login.php";
+                    </script>
+                <?php } ?>
+                <!-- onclick="openCheckoutPopup()" -->
             <!-- </form> -->
         </div>
     </section>

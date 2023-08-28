@@ -38,7 +38,7 @@ button.normal{
     outline: none;
     transition: 0.2s;
 }
-button:hover{
+button.normal:hover{
     background-color: #ffbd27;
     color:#000;
 }
@@ -142,15 +142,52 @@ button:hover{
     <h2>Featured Products</h2>
     <p>Summer Collection New Product Designs</p>
     <div class="pro-container">
-        <?php include 'fetch_product.php'; ?>
-    </div>
+        <?php
+        require_once 'include/db_connection.php';
+        $sql = "SELECT name, image, price FROM product_data where price = 1499";
+            $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                // $id = $row['id'];
+                $name = $row['name'];
+                $price = $row['price'];
+                $imageData = $row['image'];
+                $imageBase64 = base64_encode($imageData);
+                $imageSrc = "data:image/jpeg;base64," . $imageBase64;
+        ?>
+                <button class="pro" data-name="<?php echo $name; ?>" data-price="<?php echo $price; ?>" data-image="<?php echo $imageBase64; ?>" onclick="redirectToSingleProduct(this)">
+                    <img src="<?php echo $imageSrc; ?>">
+                    <div class="des">
+                        <span>Raymond</span>
+                        <h5><?php echo $name; ?></h5>
+                        <div class="star">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>₹<?php echo $price; ?></h4>
+                        <!-- <a href="#"><i class="fal fa-shopping-cart cart"></i></a> -->
+                    </div>
+                </button>
+        <?php
+            }
+        } else {
+            echo "No products found.";
+        }
+
+        $conn->close();
+        ?>
+        </div>  
 </section>
 
 <div id="customPopup" class="popup">
     <div class="popup-content">
         <span class="close-btn" onclick="closePopup()">&times;</span>
         <h4>Product added to the Cart</h4>
-        <button name="red-cart" class="normal" onclick="redirect()">Proceed to The Cart</button>
+        <button type="submit" name="red-cart" class="normal" onclick="redirect()">Proceed to The Cart</button>
         <!-- You can customize the content of the popup here if needed -->
     </div>
 </div>

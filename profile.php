@@ -44,28 +44,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
+                <?php
                     if ($loggedIn) {
-                        $orderQuery = "SELECT * FROM checkout_total_data WHERE user_name = ?";
+                        $orderQuery = "SELECT DISTINCT payment_id, order_id, product_name, product_quantity, product_price, subtotal_amount, coupon_code, total_amount, payment_id FROM checkout_total_data WHERE user_name = ?";
                         $orderStatement = mysqli_prepare($conn, $orderQuery);
                         mysqli_stmt_bind_param($orderStatement, "s", $_SESSION["username"]);
                         mysqli_stmt_execute($orderStatement);
                         $orderResult = mysqli_stmt_get_result($orderStatement);
 
+                        $printedPaymentIds = array();
+
                         while ($orderRow = mysqli_fetch_assoc($orderResult)) {
-                            echo "<tr>";
-                            echo "<td>" . $orderRow['order_id'] . "</td>";
-                            echo "<td>" . $orderRow['product_name'] . "</td>";
-                            echo "<td>" . $orderRow['product_quantity'] . "</td>";
-                            echo "<td>" . $orderRow['product_price'] . "</td>";
-                            echo "<td>" . $orderRow['subtotal_amount'] . "</td>";
-                            echo "<td>" . $orderRow['coupon_code'] . "</td>";
-                            echo "<td>" . $orderRow['total_amount'] . "</td>";
-                            echo "<td>" . $orderRow['payment_id'] . "</td>";
-                            echo "</tr>";
+                            $paymentId = $orderRow['payment_id'];
+                            if (!in_array($paymentId, $printedPaymentIds)) {
+                                echo "<tr>";
+                                echo "<td>" . $orderRow['order_id'] . "</td>";
+                                echo "<td>" . $orderRow['product_name'] . "</td>";
+                                echo "<td>" . $orderRow['product_quantity'] . "</td>";
+                                echo "<td>" . $orderRow['product_price'] . "</td>";
+                                echo "<td>" . $orderRow['subtotal_amount'] . "</td>";
+                                echo "<td>" . $orderRow['coupon_code'] . "</td>";
+                                echo "<td>" . $orderRow['total_amount'] . "</td>";
+                                echo "<td>" . $paymentId . "</td>";
+                                echo "</tr>";
+                                
+                                // Add the payment_id to the printedPaymentIds array
+                                $printedPaymentIds[] = $paymentId;
+                            }
                         }
                     }
-                    ?>
+                ?>
                 </tbody>
             </table>
             <!-- <button>View All Orders</button> -->

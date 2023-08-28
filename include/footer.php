@@ -3,7 +3,6 @@ $loggedIn = isset($_SESSION["username"]);
 
 ?>
 <footer class="section-p1">
-    <!-- <h4>&copy; 2023 YourCompanyName. All rights reserved.</h4> -->
         <div class="col">
             <img src="img/logo.png" class="logo" alt="logo">
             <h4>Contact</h4>
@@ -34,17 +33,14 @@ $loggedIn = isset($_SESSION["username"]);
         <div class="col">
             <h4>My Account</h4>
             <a href="about.php">About us</a>
-            <?php if ($loggedIn){ ?>
-            
-            <?php }else{?>
-            <a href="login.php">Sign in</a>
+            <?php if (!$loggedIn){ ?>
+                <a href="login.php">Sign in</a>
             <?php } ?>
             <a href="cart.php">View Cart</a>
             <a href="#">My Wishlist</a>
             <a href="#">Track my Order</a>
             <a href="#">Help</a>
         </div>
-
         <div class="col install">
             <h4>Trusted Payment Options</h4>
             <p>From Government of India</p>
@@ -55,17 +51,12 @@ $loggedIn = isset($_SESSION["username"]);
             <p>Secured payment Gateway</p>
             <img src="img/pay/razorpay.png" width="250px" height="60px">
         </div>
-
     </footer>
-
-    <div class="new-copy" style="display: flex; justify-content: center; align-items: center; text-align: center; background-color: #f2f2f2; padding: 20px;">
-        <p style="font-size: 14px; color: #888;">&copy; 2023 Anomaly Enterprise. All rights reserved.</p>
-        <p style="font-size: 16px; margin-left: 10px;">Crafted with <span style="color: #e74c3c;">&#9829;</span> by <span style="color: #333; font-weight: bold;">Harsh Ramwani</span></p>
+    <div class="new-copy" style="display: flex; justify-content: center; align-items: center; text-align: center; background-color: #f2f2f2; padding: 0;">
+        <p style="font-size: 14px; color: #888;">&copy; 2023 Anomaly Enterprise PVT. LTD. All rights reserved.</p>
+        <p style="font-size: 16px; margin-left: 10px;">Crafted with <span style="color: #e74c3c;">&#9829;</span> by <span style="color: #333; font-weight: bold;">Charmi Kalyani</span></p>
     </div>
-
-
     <script src="js/script.js"></script>
     <script src="js/redirect_product.js"></script>
 </body>
-
 </html>

@@ -25,7 +25,7 @@ if (mysqli_num_rows($result) > 0) {
     <div class="row">
         <div class="col-75">
             <div class="container">
-                <form action="checkout.php" id="checkout-form" method="POST">
+                <form action="checkouttest.php" id="checkout-form" method="POST">
                     <div class="row">
                         <div class="col-50"><br>
                             <!-- <h3>Billing Address</h3><br> -->
@@ -55,6 +55,7 @@ if (mysqli_num_rows($result) > 0) {
                         <input type="checkbox" checked="checked" name="sameadr"> Shipping address same as billing
                     </label>
                     <input type="hidden" id="cart-data-for-php" name="cart_data_for_php" value="">
+                    <input type="hidden" name="cust_id" value="<?php echo $row['customer_id']; ?>">
                     <textarea id="cart-data-display" style="display: none;"></textarea>
                     <div id="updateAddressPopup" class="popup" style="display: none;">
                         <div class="popup-content">

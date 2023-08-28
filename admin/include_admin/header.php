@@ -27,8 +27,6 @@ if (!isset($_COOKIE['admin_login']) || $_COOKIE['admin_login'] !== 'Admin') {
                 <li><a href="javascript:void(0);" onclick="showSection('users')">Users</a></li>
                 <li><a href="javascript:void(0);" onclick="showSection('transactions')">Transactions</a></li>
                 <li><a href="javascript:void(0);" onclick="showSection('products')">Show all Products</a></li>
-                <li><a href="javascript:void(0);" onclick="showSection('add_products')">Add Products</a></li>
-                <li><a href="javascript:void(0);" onclick="showSection('settings')">Settings</a></li>
                 <li><a href="../logout.php">Logout</a></li>
             </ul>
         </nav>

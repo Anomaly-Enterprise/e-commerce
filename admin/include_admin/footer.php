@@ -1,10 +1,12 @@
 
-        </div>
+        </main>
     </div>
+</div>
+
 <footer class="footer">
     <div class="new-copy" style="display: flex; justify-content: center; align-items: center; text-align: center; padding: 20px;">
         <p style="font-size: 14px; color: #888;">&copy; 2023 Anomaly Enterprise. All rights reserved.</p>
-        <p style="font-size: 16px; margin-left: 10px;">Crafted with <span style="color: #e74c3c;">&#9829;</span> by <span style="color: white; font-weight: bold;">Harsh Ramwani</span></p>
+        <p style="font-size: 16px; margin-left: 10px;">Crafted with <span style="color: #e74c3c;">&#9829;</span> by <span style="color: white; font-weight: bold;">Charmi Kalyani</span></p>
     </div>
 </footer>
 <script>

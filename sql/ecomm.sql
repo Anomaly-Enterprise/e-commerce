@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 14, 2023 at 01:14 PM
+-- Generation Time: Aug 25, 2023 at 03:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -69,6 +69,7 @@ CREATE TABLE `cart_items` (
 
 CREATE TABLE `checkout_cart_data` (
   `id` int(11) NOT NULL,
+  `customer_id` varchar(50) NOT NULL,
   `product_name` varchar(255) NOT NULL,
   `product_size` varchar(10) NOT NULL,
   `product_price` bigint(10) NOT NULL,
@@ -76,15 +77,17 @@ CREATE TABLE `checkout_cart_data` (
   `subtotal_amount` bigint(50) NOT NULL,
   `coupon_code` varchar(255) NOT NULL,
   `total_amount` bigint(50) NOT NULL,
-  `payment_id` varchar(255) NOT NULL
+  `payment_id` varchar(255) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `checkout_cart_data`
 --
 
-INSERT INTO `checkout_cart_data` (`id`, `product_name`, `product_size`, `product_price`, `product_quantity`, `subtotal_amount`, `coupon_code`, `total_amount`, `payment_id`) VALUES
-(1, 'Cartoon Astronaut T-Shirts 6', 'XL', 1699, 1, 1699, 'SAVE20', 1359, 'pay_MPhwQx5TqAMIAn');
+INSERT INTO `checkout_cart_data` (`id`, `customer_id`, `product_name`, `product_size`, `product_price`, `product_quantity`, `subtotal_amount`, `coupon_code`, `total_amount`, `payment_id`, `time`) VALUES
+(1, 'CU001', 'Cartoon Astronaut T-Shirts 5', 'XL', 1699, 15, 25485, 'FIRSTPURCHASE', 17840, 'pay_MTqmqwPaKg9HiD', '2023-08-24 09:07:53'),
+(2, 'CU002', 'Cartoon T-Shirt', 'XXL', 1799, 10, 17990, 'SAVE20', 14392, 'pay_MTqnhN3tjImbHQ', '2023-08-24 09:08:41');
 
 -- --------------------------------------------------------
 
@@ -93,7 +96,8 @@ INSERT INTO `checkout_cart_data` (`id`, `product_name`, `product_size`, `product
 --
 
 CREATE TABLE `checkout_total_data` (
-  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `customer_id` varchar(50) NOT NULL,
   `user_name` varchar(255) DEFAULT NULL,
   `user_email` varchar(255) DEFAULT NULL,
   `user_phone` varchar(20) DEFAULT NULL,
@@ -109,15 +113,18 @@ CREATE TABLE `checkout_total_data` (
   `subtotal_amount` decimal(10,2) DEFAULT NULL,
   `coupon_code` varchar(50) DEFAULT NULL,
   `total_amount` decimal(10,2) DEFAULT NULL,
-  `cart_payment_id` varchar(255) DEFAULT NULL
+  `cart_payment_id` varchar(255) DEFAULT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `checkout_total_data`
 --
 
-INSERT INTO `checkout_total_data` (`id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_state`, `user_zip`, `payment_id`, `product_name`, `product_size`, `product_price`, `product_quantity`, `subtotal_amount`, `coupon_code`, `total_amount`, `cart_payment_id`) VALUES
-(1, 'Charmi', 'charmikalyani123@gmail.com', '1234567890', 'Ahmedavad', '', '', '0', 'pay_MPhwQx5TqAMIAn', 'Cartoon Astronaut T-Shirts 6', 'XL', 1699.00, 1, 1699.00, 'SAVE20', 1359.00, 'pay_MPhwQx5TqAMIAn');
+INSERT INTO `checkout_total_data` (`order_id`, `customer_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_state`, `user_zip`, `payment_id`, `product_name`, `product_size`, `product_price`, `product_quantity`, `subtotal_amount`, `coupon_code`, `total_amount`, `cart_payment_id`, `time`) VALUES
+(1, '', 'Harsh', 'harshramwani5@gmail.com', '9978676386', 'Sector-4, Plot no. 203', 'Gandhidham', 'Gujarat', '370201', 'pay_MTqmqwPaKg9HiD', 'Cartoon Astronaut T-Shirts 5', 'XL', 1699.00, 15, 25485.00, 'FIRSTPURCHASE', 17840.00, 'pay_MTqmqwPaKg9HiD', '2023-08-24 09:09:51'),
+(2, '', 'Harsh', 'harshramwani5@gmail.com', '9978676386', 'Sector-4, Plot no. 203', 'Gandhidham', 'Gujarat', '370201', 'pay_MTqmqwPaKg9HiD', 'Cartoon Astronaut T-Shirts 5', 'XL', 1699.00, 15, 25485.00, 'FIRSTPURCHASE', 17840.00, 'pay_MTqmqwPaKg9HiD', '2023-08-24 09:12:26'),
+(3, '', 'Charmi', 'charmikalyani1234@gmail.com', '7894561230', 'Ahmedabad', 'Ahmedabad', 'Gujarat', '380050', 'pay_MTqnhN3tjImbHQ', 'Cartoon T-Shirt', 'XXL', 1799.00, 10, 17990.00, 'SAVE20', 14392.00, 'pay_MTqnhN3tjImbHQ', '2023-08-24 09:12:31');
 
 -- --------------------------------------------------------
 
@@ -127,6 +134,7 @@ INSERT INTO `checkout_total_data` (`id`, `user_name`, `user_email`, `user_phone`
 
 CREATE TABLE `checkout_user_data` (
   `id` int(11) NOT NULL,
+  `customer_id` varchar(50) NOT NULL,
   `user_name` varchar(255) NOT NULL,
   `user_email` varchar(255) NOT NULL,
   `user_phone` bigint(10) NOT NULL,
@@ -134,15 +142,17 @@ CREATE TABLE `checkout_user_data` (
   `user_city` varchar(255) NOT NULL,
   `user_state` varchar(255) NOT NULL,
   `user_zip` bigint(6) NOT NULL,
-  `payment_id` varchar(255) NOT NULL
+  `payment_id` varchar(255) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `checkout_user_data`
 --
 
-INSERT INTO `checkout_user_data` (`id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_state`, `user_zip`, `payment_id`) VALUES
-(1, 'Charmi', 'charmikalyani123@gmail.com', 1234567890, 'Ahmedavad', '', '', 0, 'pay_MPhwQx5TqAMIAn');
+INSERT INTO `checkout_user_data` (`id`, `customer_id`, `user_name`, `user_email`, `user_phone`, `user_address`, `user_city`, `user_state`, `user_zip`, `payment_id`, `time`) VALUES
+(1, 'CU001', 'Harsh', 'harshramwani5@gmail.com', 9978676386, 'Sector-4, Plot no. 203', 'Gandhidham', 'Gujarat', 370201, 'pay_MTqmqwPaKg9HiD', '2023-08-24 09:07:53'),
+(2, 'CU002', 'Charmi', 'charmikalyani1234@gmail.com', 7894561230, 'Ahmedabad', 'Ahmedabad', 'Gujarat', 380050, 'pay_MTqnhN3tjImbHQ', '2023-08-24 09:08:41');
 
 -- --------------------------------------------------------
 
@@ -260,6 +270,7 @@ INSERT INTO `tbl_admin` (`id`, `username`, `password`, `email`, `create_at`) VAL
 
 CREATE TABLE `tbl_member` (
   `id` int(11) NOT NULL,
+  `customer_id` varchar(50) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(200) NOT NULL,
   `email` varchar(255) NOT NULL,
@@ -269,19 +280,17 @@ CREATE TABLE `tbl_member` (
   `state` varchar(255) NOT NULL,
   `zip` bigint(6) NOT NULL,
   `same_as_billing` varchar(255) NOT NULL,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `count` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `tbl_member`
 --
 
-INSERT INTO `tbl_member` (`id`, `username`, `password`, `email`, `mobile`, `address`, `city`, `state`, `zip`, `same_as_billing`, `create_at`) VALUES
-(2, 'Harsh', 'Ramwani8740', 'harshramwani5@gmail.com', 9978676386, 'Sector-4, Plot no. 203', 'Ahmedabad', 'Gujarat', 370201, 'true', '2023-08-14 11:00:46'),
-(3, 'Darshan', 'Admin', 'darshansol108@gmail.com', 9978676386, 'Aadipur', '', '', 0, '', '2023-08-07 19:37:01'),
-(4, 'Laxman', 'Ramwani8740', 'harshramwani.21.cs@iite.indeusuni.ac.in', 9978676386, 'Sector-4, Plot no. 203', '', '', 0, '', '2023-08-02 15:24:06'),
-(5, 'User', 'Ramwani8740', 'harshramwani453@gmail.com', 9978676386, 'Sector-4, Plot no. 203', '', '', 0, '', '2023-08-04 04:44:47'),
-(6, 'Charmi', 'Kalyani', 'charmikalyani123@gmail.com', 1234567890, 'Ahmedavad', '', '', 0, '', '2023-08-04 04:50:30');
+INSERT INTO `tbl_member` (`id`, `customer_id`, `username`, `password`, `email`, `mobile`, `address`, `city`, `state`, `zip`, `same_as_billing`, `create_at`, `count`) VALUES
+(1, 'CU001', 'Harsh', 'Ramwani8740', 'harshramwani5@gmail.com', 9978676386, 'Sector-4, Plot no. 203', 'Gandhidham', 'Gujarat', 370201, '', '2023-08-24 08:37:27', 11),
+(2, 'CU002', 'Charmi', 'Kalyani', 'charmikalyani1234@gmail.com', 7894561230, 'Ahmedabad', 'Ahmedabad', 'Gujarat', 380050, '', '2023-08-25 13:01:48', 3);
 
 -- --------------------------------------------------------
 
@@ -318,7 +327,45 @@ INSERT INTO `tbl_member_logs` (`id`, `username`, `email`, `mobile`, `time`) VALU
 (14, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-13 20:01:47'),
 (15, 'Charmi', 'charmikalyani123@gmail.com', 1234567890, '2023-08-13 21:41:30'),
 (16, 'Charmi', 'charmikalyani123@gmail.com', 1234567890, '2023-08-13 21:41:41'),
-(17, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-14 07:38:10');
+(17, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-14 07:38:10'),
+(18, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-14 11:16:24'),
+(19, 'Charmi', 'charmikalyani123@gmail.com', 1234567890, '2023-08-14 11:16:38'),
+(20, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-14 11:20:25'),
+(21, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-15 10:56:24'),
+(22, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-15 11:32:55'),
+(23, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 12:47:48'),
+(24, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 12:52:24'),
+(25, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 12:54:38'),
+(26, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 12:58:33'),
+(27, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:00:03'),
+(28, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:03:06'),
+(29, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:06:33'),
+(30, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:10:21'),
+(31, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:17:41'),
+(32, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:30:58'),
+(33, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:48:47'),
+(34, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:50:16'),
+(35, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:54:56'),
+(36, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 13:57:16'),
+(37, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 14:00:38'),
+(38, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 14:13:23'),
+(39, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 14:19:50'),
+(40, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 14:23:17'),
+(41, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-17 14:27:59'),
+(42, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-23 10:39:05'),
+(43, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 06:31:50'),
+(44, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 07:01:09'),
+(45, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 07:01:46'),
+(46, 'Charmi', 'charmikalyani1234@gmail.com', 7894561230, '2023-08-24 07:02:46'),
+(47, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 07:05:36'),
+(48, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 08:13:51'),
+(49, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 08:15:09'),
+(50, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 08:21:56'),
+(51, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 08:27:13'),
+(52, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 08:37:16'),
+(53, 'Harsh', 'harshramwani5@gmail.com', 9978676386, '2023-08-24 08:37:27'),
+(54, 'Charmi', 'charmikalyani1234@gmail.com', 7894561230, '2023-08-24 09:08:06'),
+(55, 'Charmi', 'charmikalyani1234@gmail.com', 7894561230, '2023-08-25 13:01:48');
 
 -- --------------------------------------------------------
 
@@ -347,7 +394,41 @@ INSERT INTO `transaction_data` (`transaction_id`, `amount`, `currency`, `status`
 ('pay_M4TNOtlr5BGzkM', 800000, 'INR', ''),
 ('pay_M4TEzEgIdiaDdk', 1000000, 'INR', ''),
 ('pay_M4TCxlrqNQPiAR', 500000, 'INR', ''),
-('pay_M4DpVsEfY2vOKx', 30000, 'INR', '');
+('pay_M4DpVsEfY2vOKx', 30000, 'INR', ''),
+('pay_MPvfK8fF3J0WUs', 135920, 'INR', ''),
+('pay_MPvSruVak8DGxS', 179900, 'INR', ''),
+('pay_MPrvU35ZGtlMzP', 135920, 'INR', ''),
+('pay_MPhwQx5TqAMIAn', 135920, 'INR', ''),
+('pay_MPhtY4xxUF9eIS', 179900, 'INR', ''),
+('pay_MPhm5h2dWgDqiU', 143920, 'INR', ''),
+('pay_MPg5VOPWcIUFQ3', 349800, 'INR', ''),
+('pay_MPg5CYW68PWg74', 349800, 'INR', ''),
+('pay_MPg4vGa6vyjFBM', 349800, 'INR', ''),
+('pay_MPg3tFUF0iT8V5', 143920, 'INR', ''),
+('pay_MPviaudVHMYnhH', 118930, 'INR', ''),
+('pay_MPy2Yqqe7chmrn', 800, 'INR', ''),
+('pay_MInVAY48T76Wu0', 200, 'INR', ''),
+('pay_MHfjVzPRuRzkSK', 200, 'INR', ''),
+('pay_M7eNDko97WVP1S', 30000, 'INR', ''),
+('pay_M7OCuNlM4cLV39', 30000, 'INR', ''),
+('pay_M4Z37CyOHwGzqg', 30000, 'INR', ''),
+('pay_M4YOWW1CFeiu5D', 30000, 'INR', ''),
+('pay_M4TNOtlr5BGzkM', 800000, 'INR', ''),
+('pay_M4TEzEgIdiaDdk', 1000000, 'INR', ''),
+('pay_M4TCxlrqNQPiAR', 500000, 'INR', ''),
+('pay_M4DpVsEfY2vOKx', 30000, 'INR', ''),
+('pay_MPvfK8fF3J0WUs', 135920, 'INR', ''),
+('pay_MPvSruVak8DGxS', 179900, 'INR', ''),
+('pay_MPrvU35ZGtlMzP', 135920, 'INR', ''),
+('pay_MPhwQx5TqAMIAn', 135920, 'INR', ''),
+('pay_MPhtY4xxUF9eIS', 179900, 'INR', ''),
+('pay_MPhm5h2dWgDqiU', 143920, 'INR', ''),
+('pay_MPg5VOPWcIUFQ3', 349800, 'INR', ''),
+('pay_MPg5CYW68PWg74', 349800, 'INR', ''),
+('pay_MPg4vGa6vyjFBM', 349800, 'INR', ''),
+('pay_MPg3tFUF0iT8V5', 143920, 'INR', ''),
+('pay_MPviaudVHMYnhH', 118930, 'INR', ''),
+('pay_MPy2Yqqe7chmrn', 800, 'INR', '');
 
 --
 -- Indexes for dumped tables
@@ -375,7 +456,7 @@ ALTER TABLE `checkout_cart_data`
 -- Indexes for table `checkout_total_data`
 --
 ALTER TABLE `checkout_total_data`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`order_id`);
 
 --
 -- Indexes for table `checkout_user_data`
@@ -411,7 +492,8 @@ ALTER TABLE `tbl_admin`
 -- Indexes for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `tbl_member_logs`
@@ -439,19 +521,19 @@ ALTER TABLE `cart_items`
 -- AUTO_INCREMENT for table `checkout_cart_data`
 --
 ALTER TABLE `checkout_cart_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `checkout_total_data`
 --
 ALTER TABLE `checkout_total_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `checkout_user_data`
 --
 ALTER TABLE `checkout_user_data`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `contacus`
@@ -481,13 +563,13 @@ ALTER TABLE `tbl_admin`
 -- AUTO_INCREMENT for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_member_logs`
 --
 ALTER TABLE `tbl_member_logs`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -85,9 +85,34 @@ class Member
             );
         } else {
             
-            $query = 'INSERT INTO tbl_member (username, password, email, mobile, address,city, state, zip) VALUES (?, ?, ?, ?, ?,?,?,?)';
-            $paramType = 'ssssssss';
+            require 'include/db_connection.php';
+
+            function generateCustomerID($conn) {
+                // Retrieve the last used customer ID from the database
+                $query = "SELECT MAX(customer_id) AS max_id FROM tbl_member";
+                $result = mysqli_query($conn, $query);
+                $row = mysqli_fetch_assoc($result);
+                
+                // Increment the retrieved customer ID and format it
+                if ($row['max_id']) {
+                    $lastCustomerID = $row['max_id'];
+                    $newCustomerNumber = intval(substr($lastCustomerID, 2)) + 1;
+                    $newCustomerID = 'CU' . str_pad($newCustomerNumber, 3, '0', STR_PAD_LEFT);
+                } else {
+                    // If no existing customer IDs, start from CU001
+                    $newCustomerID = 'CU001';
+                }
+                
+                return $newCustomerID;
+            }
+            
+            
+            $customerID = generateCustomerID($conn);
+
+            $query = 'INSERT INTO tbl_member (customer_id, username, password, email, mobile, address,city, state, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+            $paramType = 'sssssssss';
             $paramValue = array(
+                $customerID,
                 $_POST["username"],
                 $_POST["signup-password"],
                 $_POST["email"],

@@ -19,15 +19,9 @@
                 <section id="users" class="dashboard-section" style="display: none;">
                     <?php include 'member_log_details.php'; ?>
                 </section>
-                <section id="settings" class="dashboard-section" style="display: none;">
-                    <!-- Settings content goes here -->
-                </section>
-                <!-- <main class="main-content"> -->
                 <section id="products" class="dashboard-section" style="display: none;">
                     <div class="action-buttons">
                         <button onclick="showAddProducts()">Add Product</button>
-                        <button onclick="exportProducts()">Export</button>
-                        <button onclick="importProducts()">Import</button>
                     </div>
                     <div id="addProductPopup" class="popup">
                         <div class="popup-content">
@@ -74,5 +68,5 @@
 
                     $conn->close();
                     ?>
-            </main>
+                </section>
             <?php include 'include_admin/footer.php'; ?>

@@ -15,22 +15,33 @@ if ($loggedIn) {
     $countResult = mysqli_stmt_get_result($countStatement);
     $countRow = mysqli_fetch_assoc($countResult);
     $count = $countRow["count"];
+    $menuItems = [
+        ["text" => "Home", "link" => "home.php"],
+        ["text" => "Shop", "link" => "shop.php"],
+        ["text" => "Blog", "link" => "blog.php"],
+        ["text" => "About", "link" => "about.php"],
+        ["text" => "Contact", "link" => "contact.php"],
+        ["text" => "Cart" , "link" =>"cart.php"],
+        // ["text" => "Sig In", "link" => "login.php"],
+        ["text" => "Profile", "link" => "profile.php"],
+        ["text" => "Sign Out", "link" => "logout.php"],
+    ];
+}else{
+    $menuItems = [
+        ["text" => "Home", "link" => "home.php"],
+        ["text" => "Shop", "link" => "shop.php"],
+        ["text" => "Blog", "link" => "blog.php"],
+        ["text" => "About", "link" => "about.php"],
+        ["text" => "Contact", "link" => "contact.php"],
+        ["text" => "Cart" , "link" =>"cart.php"],
+        ["text" => "Sign In", "link" => "login.php"]
+    ];
 }
 
-$menuItems = [
-    ["text" => "Home", "link" => "home.php"],
-    ["text" => "Shop", "link" => "shop.php"],
-    ["text" => "Blog", "link" => "blog.php"],
-    ["text" => "About", "link" => "about.php"],
-    ["text" => "Contact", "link" => "contact.php"],
-    ["text" => "Cart" , "link" =>"cart.php"],
-];
+
 // Define the menu items
 $profileItems = [
     ["text" => "Profile", "link" => "profile.php"],
-    ["text" => "Account", "link" => "account.php"],
-    ["text" => "Settings", "link" => "settings.php"],
-    ["text" => "Privacy", "link" => "privacy.php"],
     ["text" => "Logout", "link" => "logout.php"]
 ];
 ?>
@@ -56,7 +67,7 @@ $profileItems = [
                     background-color: #fff;
                     border: 1px solid #ccc; 
                     width: 116px;
-                    height: 100px;
+                    height: 50px;
                     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
                 }
                 .dropdown:hover .dropdown-menu {
@@ -88,28 +99,26 @@ $profileItems = [
                 <a href="home.php"><img src="img/logo.png" alt="logo" class="logo"></a>
                 <div>
                     <ul id="navbar">
-                        <?php foreach ($menuItems as $item) : ?>  
-                            <?php if($item['text'] === "Cart"){ ?>
-                                    <li id="sm-bag"><a <?php  if ($currentPage === $item['link']) echo 'class="active"'; ?> href="<?php echo $item["link"] ?>"><i class="far fa-shopping-bag"></i> <?php echo $username; ?>'s Cart</a></li>
-                            <?php } else { ?>
-                                    <li><a <?php if ($currentPage === $item['link']) echo 'class="active"'; ?> href="<?php echo $item['link']; ?>"><?php echo $item['text']; ?></a></li>
-                            <?php } ?>
-                        <?php endforeach; ?>
-                        <li id="lg-user" class="dropdown">
-                        <a href="#" class="user-icon"><i class="far fa-user"> </i></a>
+                        
                         <?php if ($loggedIn) : ?>
-                            <ul class="dropdown-menu">
-                                <?php foreach ($profileItems as $item) : $username?>
-                                    <li><a href="<?php echo $item['link']; ?>"><?php echo $item['text']; ?></a></li>
-                                <?php endforeach; ?>
-                            </ul>
+                            <?php foreach ($menuItems as $item) : ?>  
+                                <?php if($item['text'] === "Cart"){ ?>
+                                        <li id="sm-bag"><a <?php  if ($currentPage === $item['link']) echo 'class="active"'; ?> href="<?php echo $item["link"] ?>"><i class="far fa-shopping-bag"></i> <?php echo $username; ?>'s Cart</a></li>
+                                <?php } elseif($item['text'] === "Profile") { ?>
+                                        <li><a <?php if ($currentPage === $item['link']) echo 'class="active"'; ?> href="<?php echo $item['link']; ?>" class="user-icon"><i class="far fa-user"></i>  <?php echo $item['text']; ?></a></li>
+                                <?php }else{ ?>
+                                        <li><a <?php if ($currentPage === $item['link']) echo 'class="active"'; ?> href="<?php echo $item['link']; ?>"><?php echo $item['text']; ?></a></li>
+                                <?php } ?>
+                             <?php endforeach; ?>
                         <?php else : ?>
-                            <ul class="dropdown-menu">
-                                <li><a href="login.php">Login</a></li>
-                                <li><a href="user-registration.php">Sign Up</a></li>
+                            <ul id="navbar">
+                                <?php foreach ($menuItems as $item) : ?>
+                                    <li><a <?php if ($currentPage === $item['link']) echo 'class="active"'; ?> href="<?php echo $item['link']; ?>"><?php echo $item['text']; ?></a></li>
+                                <?php endforeach; ?>
+                                    
                             </ul>
                         <?php endif; ?>
-                    </li>
+                    
                         <a href="#" id="close"><i class="far fa-times"></i></a>
                     </ul>
                 </div>
